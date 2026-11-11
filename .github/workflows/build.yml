@@ -19,6 +19,9 @@ jobs:
           npm install
           npx cap add android
           npx cap sync android
+          for f in $(find android/app/src/main/res -name 'ic_launcher*.png'); do
+            sz=$(identify -format '%wx%h' "$f" 2>/dev/null) && convert icon-512.png -resize "${sz}!" "$f" || true
+          done
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
