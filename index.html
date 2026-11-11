@@ -477,7 +477,7 @@ $("ulist").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
 async function boot(u){
   unsubs.forEach(f=>f());unsubs=[];me=null;items=[];costs={};shops={};ostock={};subbed={};
   if(!u){$("in").classList.add("hide");$("auth").classList.remove("hide");$("add").classList.add("hide");return}
-  let p=null;try{const s=await getDoc(doc(doc(db,"users",u.uid)));p=s.exists()?s.data():null}catch(e){}
+  let p=null;try{const s=await getDoc(doc(db,"users",u.uid));p=s.exists()?s.data():null}catch(e){}
   if(!p||!p.active){await signOut(auth);$("am").textContent="This login is disabled or not set up. Ask your shop admin.";return}
   me={...p,uid:u.uid};$("auth").classList.add("hide");$("in").classList.remove("hide");
   $("who").textContent=`Logged in as ${p.username} (${p.role==="owner"?"app owner":p.role})`;
