@@ -29,7 +29,6 @@ input,select{width:100%;background:var(--card);border:1px solid var(--line);bord
 :focus-visible{outline:3px solid var(--green);outline-offset:1px}
 button{cursor:pointer;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);padding:8px 14px}
 button.pri{background:var(--green);color:var(--on);border-color:var(--green);font-weight:700}
-button.wa{background:#25D366;color:#fff;border-color:#25D366;font-weight:700}
 .item{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:10px;padding:12px;margin-bottom:10px}
 .item.soon{border-left-color:var(--amber)}.item.exp{border-left-color:var(--red)}
 .top{display:flex;justify-content:space-between;gap:8px}.nm{font-weight:700;font-size:17px}.sb{color:var(--muted);font-size:14px}
@@ -53,7 +52,6 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
 .msg{min-height:20px;font-size:14px;color:var(--red);margin-top:6px}
 .u{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
 .hide{display:none!important}
-.note{color:var(--muted);font-size:13px;margin-top:20px}
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1}.tabs .on{background:var(--green);color:var(--on);border-color:var(--green)}
 .chk{display:flex;gap:8px;align-items:flex-start;color:var(--ink)}.chk input{width:22px;min-height:22px;margin-top:2px}
 .lim{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.lim input{width:90px;min-height:36px;padding:4px 8px}
@@ -74,7 +72,6 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
       <label>Shop name<input id="gn" required></label>
       <label>Choose a username<input id="gu" autocapitalize="none" required></label>
       <label>Password (6+ characters)<input id="gp" type="password" minlength="6" autocomplete="new-password" required></label>
-      <label class="chk"><input id="ga" type="checkbox" required><span>I understand that the app owner can view my selling prices and stock levels for price monitoring. My cost prices stay private.</span></label>
       <button class="pri" style="width:100%" type="submit">Create shop</button>
     </form>
     <div class="msg" id="am" role="alert"></div>
@@ -83,7 +80,7 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
     <div class="who"><span id="who"></span><button id="out" type="button">Log out</button></div>
     <div id="app" class="hide">
       <div class="sum" id="sum"></div>
-      
+
       <div class="cat-tabs" id="catTabs">
         <button class="on" data-cat="all">All</button>
         <button data-cat="Insecticide">Insecticides</button>
@@ -116,17 +113,14 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
       <div class="sum" id="osum"></div>
       <input id="oq" type="search" placeholder="Search product, brand or shop" aria-label="Search" style="margin-bottom:12px">
       <div id="ogroups"></div>
-      <div class="note">Cost prices are private to each shop and are not shown here.</div>
     </div>
   </div>
-  <p class="note">The app owner can view selling prices and stock levels of all shops for price monitoring. Cost prices stay private to each shop.</p>
 </main>
 <button class="pri fab hide" id="add" type="button">Add stock</button>
 
-<!-- Add / Edit Stock Dialog -->
 <dialog id="dlg"><form id="frm" method="dialog">
   <b id="dt" style="font-size:18px">Add stock</b>
-  
+
   <label>Category
     <select id="cat" required>
       <option value="Insecticide">Insecticide (Pesticide)</option>
@@ -141,7 +135,6 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
     <input id="common" list="preset-list" required placeholder="e.g. Coragen, Urea, Ulala">
   </label>
   <datalist id="preset-list">
-    <!-- Karimnagar Popular Agrochemical Presets -->
     <option value="Chlorantraniliprole 18.5% SC (Coragen / Sholey)">
     <option value="Emamectin Benzoate 5% SG (Proclaim / War)">
     <option value="Flonicamid 50% WG (Ulala)">
@@ -174,7 +167,7 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
 
   <label>Technical name<input id="tech" placeholder="e.g. Chlorantraniliprole"></label>
   <label>Brand / Company<input id="brand" placeholder="e.g. FMC, Syngenta, Bayer"></label>
-  
+
   <div class="r2">
     <label>Lot / Batch no.<input id="lot" required></label>
     <label>Barcode no. <button type="button" id="formScanBtn" style="font-size:12px;padding:2px 6px;min-height:24px">📷 Scan</button><input id="barcode" placeholder="Optional"></label>
@@ -204,7 +197,6 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
   <div class="act"><button type="button" id="cx">Cancel</button><button class="pri" type="submit">Save</button></div>
 </form></dialog>
 
-<!-- Sell Modal Dialog -->
 <dialog id="sdlg"><form id="sfrm" method="dialog">
   <b id="st" style="font-size:18px">Sell</b>
   <label>Payment Mode
@@ -223,7 +215,6 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
   </div>
 </form></dialog>
 
-<!-- Barcode Scanner Modal -->
 <dialog id="scandlg">
   <b style="font-size:18px">Scan Barcode</b>
   <div style="margin:12px 0;text-align:center">
@@ -246,20 +237,19 @@ const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",
 const nid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 
 let me=null,items=[],costs={},users=[],unsubs=[],editId=null,sellId=null,delArm=null,secAuth=null,signingUp=false,shops={},ostock={},limits={},subbed={};
-let selectedCategory="all",photoBase64="",lastSaleData=null;
+let selectedCategory="all",photoBase64="";
 
 let pref={cur:"₹",warn:60};try{Object.assign(pref,JSON.parse(localStorage.getItem("ss-pref")))}catch(e){}
 const money=n=>pref.cur+(Math.round(n*100)/100).toLocaleString(undefined,{maximumFractionDigits:2});
 const num=n=>(Math.round(n*1000)/1000).toLocaleString(undefined,{maximumFractionDigits:3});
-const days=v=>{const p=v.split("-"),d=new Date(p[0],p[1]-1,p[2]),t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/864e5)};
+const days=v=>{if(!v)return 999;const p=v.split("-"),d=new Date(p[0],p[1]-1,p[2]),t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/864e5)};
 const fmt=v=>{if(!v)return"–";const p=v.split("-");return new Date(p[0],p[1]-1,p[2]).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})};
 const st=it=>{const d=days(it.exp);return d<0?"exp":d<=pref.warn?"soon":"ok"};
 const lab=it=>{const d=days(it.exp);return d<0?`Expired ${-d}d ago`:d===0?"Expires today":`${d} days left`};
-const F={L:1,ml:.001,kg:1,g:.001},base=u=>u==="L"||u==="ml"?"L":"kg",total=it=>it.packs*it.ps*F[it.pu];
+const F={L:1,ml:.001,kg:1,g:.001},base=u=>u==="L"||u==="ml"?"L":"kg",total=it=>(it.packs||0)*(it.ps||0)*(F[it.pu]||1);
 const cost=it=>costs[it.id]||0;
 const addLog=t=>{try{addDoc(collection(db,"shops",me.shopId,"log"),{by:me.username,at:Date.now(),text:t})}catch(e){}};
 
-// Handle Category Tabs
 $("catTabs").onclick=e=>{
   const b=e.target.closest("button");if(!b)return;
   Array.from($("catTabs").children).forEach(c=>c.classList.remove("on"));
@@ -269,12 +259,12 @@ $("catTabs").onclick=e=>{
 function render(){
   let c=0,sell=0,soon=0,exp=0,loss=0,L=0,kg=0;
   items.forEach(it=>{const s=st(it);
-    if(s==="exp"){exp++;loss+=it.packs*cost(it)}else{c+=it.packs*cost(it);sell+=it.packs*it.sell;base(it.pu)==="L"?L+=total(it):kg+=total(it)}
+    if(s==="exp"){exp++;loss+=(it.packs||0)*cost(it)}else{c+=(it.packs||0)*cost(it);sell+=(it.packs||0)*(it.sell||0);base(it.pu)==="L"?L+=total(it):kg+=total(it)}
     if(s==="soon")soon++});
   $("sum").innerHTML=`<div class="s"><b>${money(c)}</b><span>Stock value (cost)</span></div><div class="s"><b>${money(sell-c)}</b><span>Expected profit</span></div>
   <div class="s"><b>${num(L)} L</b><span>Liquid in stock</span></div><div class="s"><b>${num(kg)} kg</b><span>Solid in stock</span></div>
   <div class="s ${soon?"warn":""}"><b>${soon}</b><span>Expiring within ${pref.warn} days</span></div><div class="s ${exp?"bad":""}"><b>${exp?money(loss):0}</b><span>Expired loss (${exp} lots)</span></div>`;
-  
+
   const q=$("q").value.trim().toLowerCase(),f=$("f").value,adm=me&&me.role==="admin";
   const rows=items.filter(it=>{
     const matchCat=selectedCategory==="all"||(it.cat||"Insecticide")===selectedCategory;
@@ -286,7 +276,7 @@ function render(){
   $("list").innerHTML=rows.length?rows.map(it=>`<div class="item ${st(it)}" data-id="${it.id}">
     <div class="top">
       <div>
-        <div class="nm">${esc(it.common)}</div>
+        <div class="nm">${esc(it.common||"Unnamed")}</div>
         <div class="sb">${[it.tech,it.brand].filter(Boolean).map(esc).join(" · ")||"No technical or brand name"}</div>
       </div>
       <div class="tags">
@@ -297,13 +287,13 @@ function render(){
     <div class="item-body">
       ${it.photo?`<img class="thumb" src="${it.photo}" alt="Product">`:""}
       <div class="g">
-        <span>Lot <b>${esc(it.lot)}</b> ${it.barcode?`· Barcode <b>${esc(it.barcode)}</b>`:""}</span>
+        <span>Lot <b>${esc(it.lot||"–")}</b> ${it.barcode?`· Barcode <b>${esc(it.barcode)}</b>`:""}</span>
         <span>Expiry <b>${fmt(it.exp)}</b></span>
         <span>Bought <b>${fmt(it.bought)}</b></span>
         <span>Supplier <b>${esc(it.sup||"–")}</b></span>
-        <span class="w">Packing <b>${num(it.ps)} ${esc(it.pu)} × ${num(it.packs)} packs = ${num(total(it))} ${base(it.pu)}</b></span>
+        <span class="w">Packing <b>${num(it.ps||0)} ${esc(it.pu||"L")} × ${num(it.packs||0)} packs = ${num(total(it))} ${base(it.pu||"L")}</b></span>
         <span>Cost / pack <b>${money(cost(it))}</b></span>
-        <span>Selling / pack <b>${money(it.sell)}</b></span>
+        <span>Selling / pack <b>${money(it.sell||0)}</b></span>
       </div>
     </div>
     <div class="act" style="margin-top:10px">
@@ -316,17 +306,22 @@ function render(){
 
 function renderUsers(){$("ulist").innerHTML=users.map(u=>`<div class="u"><span>${esc(u.username)} · ${u.role}${u.active?"":" · disabled"}</span>${u.id===me.uid?"":`<button data-u="${u.id}" data-on="${u.active?0:1}" type="button">${u.active?"Disable":"Enable"}</button>`}</div>`).join("")}
 
-const ppu=r=>r.sell/((r.ps*F[r.pu])||1),lim=k=>limits[k]&&limits[k].max;
+const ppu=r=>(r.sell||0)/(((r.ps||1)*(F[r.pu]||1))||1),lim=k=>limits[k]&&limits[k].max;
 function renderOwner(){
   const q=$("oq").value.trim().toLowerCase(),g={};let lots=0,expd=0;
-  Object.keys(ostock).forEach(sid=>ostock[sid].forEach(it=>{lots++;if(st(it)==="exp")expd++;const k=it.common.trim().toLowerCase();(g[k]=g[k]||[]).push({...it,shop:(shops[sid]||{}).name||sid})}));
-  const over=k=>g[k].filter(r=>lim(k)&&ppu(r)>lim(k)).length;
-  const keys=Object.keys(g).filter(k=>!q||k.includes(q)||g[k].some(r=>(r.shop+" "+(r.brand||"")).toLowerCase().includes(q))).sort((a,b)=>over(b)-over(a)||a.localeCompare(b));
+  Object.keys(ostock).forEach(sid=>(ostock[sid]||[]).forEach(it=>{
+    lots++;
+    if(st(it)==="exp")expd++;
+    const k=String(it.common||"unnamed").trim().toLowerCase();
+    (g[k]=g[k]||[]).push({...it,shop:(shops[sid]||{}).name||sid});
+  }));
+  const over=k=>(g[k]||[]).filter(r=>lim(k)&&ppu(r)>lim(k)).length;
+  const keys=Object.keys(g).filter(k=>!q||k.includes(q)||g[k].some(r=>(String(r.shop||"")+" "+String(r.brand||"")).toLowerCase().includes(q))).sort((a,b)=>over(b)-over(a)||a.localeCompare(b));
   const flagged=Object.keys(g).reduce((a,k)=>a+over(k),0);
   $("osum").innerHTML=`<div class="s"><b>${Object.keys(shops).length}</b><span>Shops</span></div><div class="s"><b>${lots}</b><span>Stock lots</span></div><div class="s ${flagged?"bad":""}"><b>${flagged}</b><span>Prices above limit</span></div><div class="s ${expd?"warn":""}"><b>${expd}</b><span>Expired lots</span></div>`;
   $("ogroups").innerHTML=keys.length?keys.map(k=>{const rs=g[k].slice().sort((a,b)=>ppu(b)-ppu(a)),n=over(k);
-    return`<div class="item ${n?"exp":""}"><div class="top"><div class="nm">${esc(rs[0].common)}</div><label class="lim" style="margin:0">Max per ${base(rs[0].pu)}<input data-k="${esc(k)}" type="number" min="0" step="any" value="${lim(k)||""}" aria-label="Maximum price per unit"></label></div>`+
-    rs.map(r=>`<div class="u" style="display:block"><b>${esc(r.shop)}</b> · ${esc(r.brand||"–")} · lot ${esc(r.lot)}<br><span class="sb">${money(r.sell)} per ${num(r.ps)} ${esc(r.pu)} pack · ${money(ppu(r))} per ${base(r.pu)}${lim(k)&&ppu(r)>lim(k)?" · above limit":""}</span></div>`).join("")+`</div>`}).join("") :`<div class="empty">No stock from any shop yet.</div>`;
+    return`<div class="item ${n?"exp":""}"><div class="top"><div class="nm">${esc(rs[0].common||"Unnamed")}</div><label class="lim" style="margin:0">Max per ${base(rs[0].pu||"L")}<input data-k="${esc(k)}" type="number" min="0" step="any" value="${lim(k)||""}" aria-label="Maximum price per unit"></label></div>`+
+    rs.map(r=>`<div class="u" style="display:block"><b>${esc(r.shop)}</b> · ${esc(r.brand||"–")} · lot ${esc(r.lot||"–")}<br><span class="sb">${money(r.sell||0)} per ${num(r.ps||0)} ${esc(r.pu||"L")} pack · ${money(ppu(r))} per ${base(r.pu||"L")}${lim(k)&&ppu(r)>lim(k)?" · above limit":""}</span></div>`).join("")+`</div>`}).join(""):`<div class="empty">No stock from any shop yet.</div>`;
 }
 $("oq").oninput=renderOwner;
 $("ogroups").onchange=async e=>{const i=e.target.closest("input[data-k]");if(!i)return;const k=i.dataset.k;
@@ -335,13 +330,12 @@ $("ogroups").onchange=async e=>{const i=e.target.closest("input[data-k]");if(!i)
 function startOwner(){
   unsubs.push(onSnapshot(collection(db,"limits"),s=>{limits={};s.docs.forEach(d=>limits[d.id]=d.data());renderOwner()}));
   unsubs.push(onSnapshot(collection(db,"shops"),s=>{s.docs.forEach(d=>{shops[d.id]=d.data();
-    if(!subbed[d.id]){subbed[d.id]=1;unsubs.push(onSnapshot(collection(db,"shops",d.id,"stock"),ss=>{ostock[d.id]=ss.docs.map(x=>({...x.data(),id:x.id}));renderOwner()}))}});renderOwner()}));
+    if(!subbed[d.id]){subbed[d.id]=1;unsubs.push(onSnapshot(collection(db,"shops",d.id,"stock"),ss=>{ostock[d.id]=ss.docs.map(x=>({...x.data(),id:x.id}));renderOwner()},err=>console.log(err)))}});renderOwner()}));
 }
 
-const ftot=()=>{$("ftot").textContent="Total quantity: "+num((+$("ps").value||0)*(+$("packs").value||0)*F[$("pu").value])+" "+base($("pu").value)};
+const ftot=()=>{$("ftot").textContent="Total quantity: "+num((+$("ps").value||0)*(+$("packs").value||0)*(F[$("pu").value]||1))+" "+base($("pu").value)};
 ["ps","packs","pu"].forEach(i=>$(i).addEventListener("input",ftot));
 
-// Photo Upload Handler
 $("photoInput").onchange=e=>{
   const file=e.target.files[0];
   if(!file)return;
@@ -374,7 +368,6 @@ $("frm").onsubmit=async()=>{
   try{await setDoc(doc(db,"shops",sid,"stock",id),o);await setDoc(doc(db,"shops",sid,"private",id),{cost:parseFloat($("cost").value)||0});addLog((editId?"edited ":"added ")+o.common+" (lot "+o.lot+")")}catch(e){alert("Couldn’t save: "+e.message)}
 };
 
-// Sell Form Total & Submit
 const updateStot=()=>{
   const it=items.find(x=>x.id===sellId);if(!it)return;
   const q=+$("sq").value||0;
@@ -390,10 +383,14 @@ $("sfrm").onsubmit=async()=>{
     await updateDoc(doc(db,"shops",me.shopId,"stock",sellId),{packs:Math.max(0,Math.round((it.packs-n)*1000)/1000)});
     const logTxt=`sold ${num(n)} packs of ${it.common} (lot ${it.lot}) - ${mode}${cname?' to '+cname:''}`;
     addLog(logTxt);
-    
-    // Trigger WhatsApp Receipt Option
     if(cphone){
-      const billMsg=`*SHOP RECEIPT*\nItem: ${it.common}\nLot: ${it.lot}\nPacks: ${n}\nTotal: ${money(n*it.sell)}\nPayment: ${mode}\nThank you!`;
+      const billMsg=`*SHOP RECEIPT*
+Item: ${it.common}
+Lot: ${it.lot}
+Packs: ${n}
+Total: ${money(n*it.sell)}
+Payment: ${mode}
+Thank you!`;
       window.open(`https://wa.me/91${cphone.replace(/\D/g,'')}?text=${encodeURIComponent(billMsg)}`,'_blank');
     }
   }catch(e){alert("Couldn’t update sale: "+e.message)}
@@ -412,7 +409,6 @@ $("list").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
 
 $("q").oninput=render;$("f").onchange=render;
 
-// Barcode Scanner Handler using Native BarcodeDetector API
 let scanTargetInput=null,streamTrack=null;
 async function startScan(targetInput){
   scanTargetInput=targetInput;
@@ -456,7 +452,7 @@ $("lf").onsubmit=async e=>{e.preventDefault();$("am").textContent="";
 $("sg").onsubmit=async e=>{e.preventDefault();$("am").textContent="";signingUp=true;
   try{const u=$("gu").value.trim().toLowerCase(),sid=nid();
     const c=await createUserWithEmailAndPassword(auth,mail(u),$("gp").value);
-    await setDoc(doc(db,"shops",sid),{name:$("gn").value.trim(),ownerUid:c.user.uid,createdAt:Date.now(),agreedNotice:true});
+    await setDoc(doc(db,"shops",sid),{name:$("gn").value.trim(),ownerUid:c.user.uid,createdAt:Date.now()});
     await setDoc(doc(db,"users",c.user.uid),{username:u,role:"admin",shopId:sid,active:true});
     signingUp=false;await boot(auth.currentUser);
   }catch(x){signingUp=false;$("am").textContent=x.code==="auth/email-already-in-use"?"That username is taken. Try another.":"Couldn’t create the shop: "+x.message}};
