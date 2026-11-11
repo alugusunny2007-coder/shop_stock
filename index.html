@@ -56,6 +56,18 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
 .chk{display:flex;gap:8px;align-items:flex-start;color:var(--ink)}.chk input{width:22px;min-height:22px;margin-top:2px}
 .lim{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.lim input{width:90px;min-height:36px;padding:4px 8px}
 .img-preview{width:100%;height:100px;object-fit:cover;border-radius:8px;margin-top:6px;display:none}
+
+.mini{display:inline-block;width:66px;min-height:30px;padding:2px 5px;margin:0 3px;text-align:center;font-size:13px}
+.chart-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.chart-head span,.chart-note{font-size:12px;color:var(--muted)}
+.chart-total{font-size:22px;font-weight:800;margin:10px 0 2px}.chart-total small{font-size:12px;font-weight:500;color:var(--muted)}
+#chart svg{display:block;width:100%;height:auto;max-height:150px;overflow:visible;margin-top:4px}
+.chart-split{display:flex;height:10px;overflow:hidden;border-radius:8px;background:var(--line);margin-top:10px}
+.chart-split span{background:var(--green)}.chart-split i{display:block;background:var(--amber)}
+.chart-values,.chart-legend{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);margin-top:6px}
+.chart-legend{justify-content:flex-start;margin-top:10px}.chart-legend span{display:flex;align-items:center;gap:5px}
+.chart-legend i{width:9px;height:9px;border-radius:50%;display:inline-block}.cash-dot{background:var(--green)}.credit-dot{background:var(--amber)}
+.chart-empty{padding:16px 4px;text-align:center;color:var(--muted);font-size:14px}
+.item{animation:card-in .22s ease-out both}@keyframes card-in{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -80,7 +92,12 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
     <div class="who"><span id="who"></span><button id="out" type="button">Log out</button></div>
     <div id="app" class="hide">
       <div class="sum" id="sum"></div>
-
+      <section class="box hide" id="chartBox" aria-label="Sales dashboard">
+        <div class="chart-head"><b>Sales overview</b><span id="chartRange">Last 14 days</span></div>
+        <div id="chart"></div>
+        <div class="chart-legend"><span><i class="cash-dot"></i> Cash</span><span><i class="credit-dot"></i> Credit</span></div>
+        <p class="sb" id="chartNote">Sales history starts recording after this update.</p>
+      </section>
       <div class="cat-tabs" id="catTabs">
         <button class="on" data-cat="all">All</button>
         <button data-cat="Insecticide">Insecticides</button>
@@ -89,7 +106,6 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
         <button data-cat="Herbicide">Herbicides</button>
         <button data-cat="PGR">PGRs</button>
       </div>
-
       <div class="bar">
         <input id="q" type="search" placeholder="Search name, brand, lot or barcode..." aria-label="Search">
         <button id="scanBtn" type="button" style="min-width:44px;padding:0 10px" title="Scan Barcode">📷</button>
@@ -117,10 +133,9 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
   </div>
 </main>
 <button class="pri fab hide" id="add" type="button">Add stock</button>
-
 <dialog id="dlg"><form id="frm" method="dialog">
   <b id="dt" style="font-size:18px">Add stock</b>
-
+  
   <label>Category
     <select id="cat" required>
       <option value="Insecticide">Insecticide (Pesticide)</option>
@@ -130,7 +145,6 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
       <option value="PGR">PGR / Biostimulant</option>
     </select>
   </label>
-
   <label>Common name
     <input id="common" list="preset-list" required placeholder="e.g. Coragen, Urea, Ulala">
   </label>
@@ -163,11 +177,47 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
     <option value="Atrazine 50% WP (Atratrap)">
     <option value="Pretilachlor 50% EC (Rifit)">
     <option value="Glufosinate Ammonium 13.5% SL (Basta)">
+
+    <option value="Broflanilide 20% SC (Exponus)">
+    <option value="Azoxystrobin 18.2% + Difenoconazole 11.4% SC (Amistar Top)">
+    <option value="Profenofos 40% + Cypermethrin 4% EC (Polytrin C)">
+    <option value="Chlorpyrifos 50% + Cypermethrin 5% EC (505)">
+    <option value="Fipronil 80% WG (Jump)">
+    <option value="Pendimethalin 38.7% CS (Panda)">
+    <option value="Iprobenfos 48% EC">
+    <option value="Azoxystrobin 7.5% + Tebuconazole 12% + Isoprothiolane 12% SE">
+    <option value="Carbendazim 12% + Mancozeb 63% WP (Saaf)">
+    <option value="Trifloxystrobin + Tebuconazole (Nativo)">
+    <option value="Glyphosate 41% SL (Roundup / Glycel)">
+    <option value="Quizalofop-Ethyl 5% EC (Targa Super)">
+    <option value="Atrazine 50% WP (Atratrap)">
+    <option value="Pretilachlor 50% EC (Rifit)">
+    <option value="Glufosinate Ammonium 13.5% SL (Basta)">
   </datalist>
-
-  <label>Technical name<input id="tech" placeholder="e.g. Chlorantraniliprole"></label>
-  <label>Brand / Company<input id="brand" placeholder="e.g. FMC, Syngenta, Bayer"></label>
-
+  <label>Technical name<input id="tech" list="tech-list" placeholder="e.g. Chlorantraniliprole"></label>
+  <datalist id="tech-list">
+    <option value="Chlorantraniliprole"><option value="Emamectin benzoate"><option value="Flonicamid">
+    <option value="Imidacloprid"><option value="Fipronil"><option value="Thiamethoxam">
+    <option value="Spinetoram"><option value="Diafenthiuron"><option value="Dinotefuran">
+    <option value="Hexaconazole"><option value="Validamycin"><option value="Thiophanate methyl">
+    <option value="Fenpyroximate"><option value="Spiromesifen"><option value="Propargite">
+    <option value="Bispyribac-sodium"><option value="Pendimethalin"><option value="Glyphosate">
+    <option value="Quizalofop-ethyl"><option value="Atrazine"><option value="Pretilachlor">
+    <option value="Glufosinate ammonium"><option value="Azoxystrobin + Difenoconazole">
+    <option value="Profenofos + Cypermethrin"><option value="Chlorpyrifos + Cypermethrin">
+  </datalist>
+  <label>Brand / Company<input id="brand" list="brand-list" placeholder="e.g. Coragen, Syngenta, Bayer"></label>
+  <datalist id="brand-list">
+    <option value="Coragen"><option value="Sholey"><option value="Proclaim"><option value="War">
+    <option value="Ulala"><option value="Confidor"><option value="Regent"><option value="Jump">
+    <option value="Actara"><option value="Delegate"><option value="Pegasus"><option value="Osheen">
+    <option value="Contaf"><option value="Sheathmar"><option value="Roko"><option value="Pyrote">
+    <option value="Oberon"><option value="Omite"><option value="Nominee Gold"><option value="Stomp">
+    <option value="Panda"><option value="Roundup"><option value="Glycel"><option value="Targa Super">
+    <option value="Atratrap"><option value="Rifit"><option value="Basta"><option value="Saaf">
+    <option value="Amistar Top"><option value="Polytrin C"><option value="Nativo"><option value="Exponus">
+  </datalist>
+  
   <div class="r2">
     <label>Lot / Batch no.<input id="lot" required></label>
     <label>Barcode no. <button type="button" id="formScanBtn" style="font-size:12px;padding:2px 6px;min-height:24px">📷 Scan</button><input id="barcode" placeholder="Optional"></label>
@@ -187,16 +237,13 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
     <label>Cost per pack<input id="cost" type="number" min="0" step="any" required></label>
     <label>Selling price per pack<input id="sell" type="number" min="0" step="any" required></label>
   </div>
-
   <label>Product Photo (Optional)
     <input type="file" id="photoInput" accept="image/*">
     <img id="photoPreview" class="img-preview" alt="Product preview">
   </label>
-
   <div class="tot" id="ftot"></div>
   <div class="act"><button type="button" id="cx">Cancel</button><button class="pri" type="submit">Save</button></div>
 </form></dialog>
-
 <dialog id="sdlg"><form id="sfrm" method="dialog">
   <b id="st" style="font-size:18px">Sell</b>
   <label>Payment Mode
@@ -214,7 +261,6 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
     <button class="pri" type="submit">Reduce stock</button>
   </div>
 </form></dialog>
-
 <dialog id="scandlg">
   <b style="font-size:18px">Scan Barcode</b>
   <div style="margin:12px 0;text-align:center">
@@ -223,22 +269,19 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
   </div>
   <div class="act"><button type="button" id="closeScan">Close Scanner</button></div>
 </dialog>
-
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script type="module">
 import {firebaseConfig} from "./firebase-config.js";
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged,createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,doc,getDoc,setDoc,updateDoc,deleteDoc,onSnapshot,addDoc,query,orderBy,limit,where} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+import {getFirestore,collection,doc,getDoc,setDoc,updateDoc,deleteDoc,onSnapshot,addDoc,query,orderBy,limit,where,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const $=i=>document.getElementById(i);
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const mail=u=>u.trim().toLowerCase().replace(/[^a-z0-9._-]/g,"")+"@shopstock.app";
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const nid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-
 let me=null,items=[],costs={},users=[],unsubs=[],editId=null,sellId=null,delArm=null,secAuth=null,signingUp=false,shops={},ostock={},limits={},subbed={};
-let selectedCategory="all",photoBase64="";
-
+let selectedCategory="all",photoBase64="",salesRows=[];
 let pref={cur:"₹",warn:60};try{Object.assign(pref,JSON.parse(localStorage.getItem("ss-pref")))}catch(e){}
 const money=n=>pref.cur+(Math.round(n*100)/100).toLocaleString(undefined,{maximumFractionDigits:2});
 const num=n=>(Math.round(n*1000)/1000).toLocaleString(undefined,{maximumFractionDigits:3});
@@ -249,13 +292,24 @@ const lab=it=>{const d=days(it.exp);return d<0?`Expired ${-d}d ago`:d===0?"Expir
 const F={L:1,ml:.001,kg:1,g:.001},base=u=>u==="L"||u==="ml"?"L":"kg",total=it=>(it.packs||0)*(it.ps||0)*(F[it.pu]||1);
 const cost=it=>costs[it.id]||0;
 const addLog=t=>{try{addDoc(collection(db,"shops",me.shopId,"log"),{by:me.username,at:Date.now(),text:t})}catch(e){}};
-
+const localDay=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+function renderChart(){
+  const box=$("chartBox"),host=$("chart");if(!box||!host)return;
+  const rows=salesRows.filter(x=>!x.cancelled),daysMap={};let cash=0,credit=0,total=0;
+  rows.forEach(x=>{const amount=Number(x.total)||0;daysMap[x.day||new Date(x.at||Date.now()).toISOString().slice(0,10)]=(daysMap[x.day||new Date(x.at||Date.now()).toISOString().slice(0,10)]||0)+amount;total+=amount;if(x.mode==="Credit")credit+=amount;else cash+=amount});
+  const keys=Object.keys(daysMap).sort().slice(-14);
+  if(!rows.length){box.classList.remove("hide");host.innerHTML='<div class="chart-empty">No sales recorded yet. New sales will appear here automatically.</div>';$("chartNote").textContent="Only sales made after this update are included; older sales are not reconstructed.";return}
+  box.classList.remove("hide");const max=Math.max(1,...keys.map(k=>daysMap[k]));const W=320,H=132,bw=W/Math.max(1,keys.length);
+  const bars=keys.map((k,i)=>{const h=Math.max(3,daysMap[k]/max*88);return `<rect x="${i*bw+bw*.16}" y="${100-h}" width="${bw*.68}" height="${h}" rx="4" fill="var(--green)"/><text x="${i*bw+bw/2}" y="119" text-anchor="middle" font-size="9" fill="currentColor">${k.slice(5)}</text>`}).join("");
+  host.innerHTML=`<div class="chart-total">${money(total)} <small>recorded sales</small></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Daily sales for the last 14 days">${bars}</svg><div class="chart-split"><span style="width:${total?cash/total*100:0}%"></span><i style="width:${total?credit/total*100:0}%"></i></div><div class="chart-values"><span>Cash ${money(cash)}</span><span>Credit ${money(credit)}</span></div>`;
+  $("chartNote").textContent=`${rows.length} recorded sale${rows.length===1?"":"s"} · last 14 active days shown`;
+}
+$("sum").addEventListener("change",e=>{if(e.target.id!=="warnIn")return;pref.warn=Math.max(1,Math.min(365,parseInt(e.target.value,10)||60));try{localStorage.setItem("ss-pref",JSON.stringify(pref))}catch(x){}render()});
 $("catTabs").onclick=e=>{
   const b=e.target.closest("button");if(!b)return;
   Array.from($("catTabs").children).forEach(c=>c.classList.remove("on"));
   b.classList.add("on");selectedCategory=b.dataset.cat;render();
 };
-
 function render(){
   let c=0,sell=0,soon=0,exp=0,loss=0,L=0,kg=0;
   items.forEach(it=>{const s=st(it);
@@ -263,8 +317,9 @@ function render(){
     if(s==="soon")soon++});
   $("sum").innerHTML=`<div class="s"><b>${money(c)}</b><span>Stock value (cost)</span></div><div class="s"><b>${money(sell-c)}</b><span>Expected profit</span></div>
   <div class="s"><b>${num(L)} L</b><span>Liquid in stock</span></div><div class="s"><b>${num(kg)} kg</b><span>Solid in stock</span></div>
-  <div class="s ${soon?"warn":""}"><b>${soon}</b><span>Expiring within ${pref.warn} days</span></div><div class="s ${exp?"bad":""}"><b>${exp?money(loss):0}</b><span>Expired loss (${exp} lots)</span></div>`;
-
+  <div class="s ${soon?"warn":""}"><b>${soon}</b><span>Expiring within <input id="warnIn" class="mini" type="number" min="1" max="365" value="${pref.warn}" aria-label="Expiry warning days"> days</span></div><div class="s ${exp?"bad":""}"><b>${exp?money(loss):0}</b><span>Expired loss (${exp} lots)</span></div>`;
+  
+  renderChart();
   const q=$("q").value.trim().toLowerCase(),f=$("f").value,adm=me&&me.role==="admin";
   const rows=items.filter(it=>{
     const matchCat=selectedCategory==="all"||(it.cat||"Insecticide")===selectedCategory;
@@ -272,7 +327,6 @@ function render(){
     const matchF=f==="all"||st(it)===f;
     return matchCat && matchQ && matchF;
   }).sort((a,b)=>a.exp<b.exp?-1:a.exp>b.exp?1:0);
-
   $("list").innerHTML=rows.length?rows.map(it=>`<div class="item ${st(it)}" data-id="${it.id}">
     <div class="top">
       <div>
@@ -303,9 +357,7 @@ function render(){
     </div>
   </div>`).join(""):`<div class="empty">${items.length?"No lots match search/category.":"No stock yet. Tap “Add stock” to enter your first lot."}</div>`;
 }
-
 function renderUsers(){$("ulist").innerHTML=users.map(u=>`<div class="u"><span>${esc(u.username)} · ${u.role}${u.active?"":" · disabled"}</span>${u.id===me.uid?"":`<button data-u="${u.id}" data-on="${u.active?0:1}" type="button">${u.active?"Disable":"Enable"}</button>`}</div>`).join("")}
-
 const ppu=r=>(r.sell||0)/(((r.ps||1)*(F[r.pu]||1))||1),lim=k=>limits[k]&&limits[k].max;
 function renderOwner(){
   const q=$("oq").value.trim().toLowerCase(),g={};let lots=0,expd=0;
@@ -326,16 +378,13 @@ function renderOwner(){
 $("oq").oninput=renderOwner;
 $("ogroups").onchange=async e=>{const i=e.target.closest("input[data-k]");if(!i)return;const k=i.dataset.k;
   try{i.value===""?await deleteDoc(doc(db,"limits",k)):await setDoc(doc(db,"limits",k),{max:+i.value||0})}catch(x){alert("Couldn’t save limit: "+x.message)}};
-
 function startOwner(){
   unsubs.push(onSnapshot(collection(db,"limits"),s=>{limits={};s.docs.forEach(d=>limits[d.id]=d.data());renderOwner()}));
   unsubs.push(onSnapshot(collection(db,"shops"),s=>{s.docs.forEach(d=>{shops[d.id]=d.data();
     if(!subbed[d.id]){subbed[d.id]=1;unsubs.push(onSnapshot(collection(db,"shops",d.id,"stock"),ss=>{ostock[d.id]=ss.docs.map(x=>({...x.data(),id:x.id}));renderOwner()},err=>console.log(err)))}});renderOwner()}));
 }
-
 const ftot=()=>{$("ftot").textContent="Total quantity: "+num((+$("ps").value||0)*(+$("packs").value||0)*(F[$("pu").value]||1))+" "+base($("pu").value)};
 ["ps","packs","pu"].forEach(i=>$(i).addEventListener("input",ftot));
-
 $("photoInput").onchange=e=>{
   const file=e.target.files[0];
   if(!file)return;
@@ -347,7 +396,6 @@ $("photoInput").onchange=e=>{
   };
   reader.readAsDataURL(file);
 };
-
 const FIELDS=["cat","common","tech","brand","lot","barcode","sup","bought","exp","ps","packs","sell"];
 function openForm(it){
   editId=it?it.id:null;$("dt").textContent=it?"Edit stock":"Add stock";
@@ -360,14 +408,12 @@ function openForm(it){
   ftot();$("dlg").showModal();
 }
 $("add").onclick=()=>openForm(null);$("cx").onclick=()=>$("dlg").close();$("scx").onclick=()=>$("sdlg").close();
-
 $("frm").onsubmit=async()=>{
   const o={};FIELDS.forEach(k=>o[k]=$(k).value.trim());["ps","packs","sell"].forEach(k=>o[k]=parseFloat(o[k])||0);
   o.pu=$("pu").value;o.photo=photoBase64;
   const id=editId||nid(),sid=me.shopId;
   try{await setDoc(doc(db,"shops",sid,"stock",id),o);await setDoc(doc(db,"shops",sid,"private",id),{cost:parseFloat($("cost").value)||0});addLog((editId?"edited ":"added ")+o.common+" (lot "+o.lot+")")}catch(e){alert("Couldn’t save: "+e.message)}
 };
-
 const updateStot=()=>{
   const it=items.find(x=>x.id===sellId);if(!it)return;
   const q=+$("sq").value||0;
@@ -375,27 +421,20 @@ const updateStot=()=>{
 };
 $("sq").oninput=updateStot;
 $("paymode").onchange=updateStot;
-
-$("sfrm").onsubmit=async()=>{
+$("sfrm").onsubmit=async e=>{
+  e.preventDefault();
   const it=items.find(x=>x.id===sellId);if(!it)return;
   const n=+$("sq").value||0,mode=$("paymode").value,cname=$("cname").value.trim(),cphone=$("cphone").value.trim();
+  if(!(n>0)||n>Number(it.packs||0)){alert("Enter a quantity greater than zero and no more than the available packs.");return}
+  const at=Date.now(),totalAmount=n*(Number(it.sell)||0),saleRef=doc(collection(db,"shops",me.shopId,"sales")),batch=writeBatch(db);
   try{
-    await updateDoc(doc(db,"shops",me.shopId,"stock",sellId),{packs:Math.max(0,Math.round((it.packs-n)*1000)/1000)});
-    const logTxt=`sold ${num(n)} packs of ${it.common} (lot ${it.lot}) - ${mode}${cname?' to '+cname:''}`;
-    addLog(logTxt);
-    if(cphone){
-      const billMsg=`*SHOP RECEIPT*
-Item: ${it.common}
-Lot: ${it.lot}
-Packs: ${n}
-Total: ${money(n*it.sell)}
-Payment: ${mode}
-Thank you!`;
-      window.open(`https://wa.me/91${cphone.replace(/\D/g,'')}?text=${encodeURIComponent(billMsg)}`,'_blank');
-    }
-  }catch(e){alert("Couldn’t update sale: "+e.message)}
+    batch.update(doc(db,"shops",me.shopId,"stock",sellId),{packs:Math.max(0,Math.round((it.packs-n)*1000)/1000)});
+    batch.set(saleRef,{at,day:localDay(),packs:n,price:Number(it.sell)||0,total:totalAmount,mode,product:it.common||"",lot:it.lot||"",by:me.username,customer:cname||""});
+    await batch.commit();$("sdlg").close();
+    const logTxt=`sold ${num(n)} packs of ${it.common} (lot ${it.lot}) - ${mode}${cname?' to '+cname:''}`;addLog(logTxt);
+    if(cphone){const billMsg=`*SHOP RECEIPT*\nItem: ${it.common}\nLot: ${it.lot}\nPacks: ${n}\nTotal: ${money(totalAmount)}\nPayment: ${mode}\nThank you!`;window.open(`https://wa.me/91${cphone.replace(/\D/g,'')}?text=${encodeURIComponent(billMsg)}`,'_blank')}
+  }catch(e){alert("Couldn’t save sale: "+e.message)}
 };
-
 $("list").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
   const id=b.closest(".item").dataset.id,it=items.find(x=>x.id===id);
   if(b.dataset.a==="edit")openForm(it);
@@ -406,45 +445,26 @@ $("list").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
   }
   else if(b.dataset.a==="del"){if(delArm===id){delArm=null;try{await deleteDoc(doc(db,"shops",me.shopId,"stock",id));await deleteDoc(doc(db,"shops",me.shopId,"private",id));addLog("deleted "+it.common+" (lot "+it.lot+")")}catch(x){alert("Couldn’t delete: "+x.message)}}else{delArm=id;render()}}
 };
-
 $("q").oninput=render;$("f").onchange=render;
-
-let scanTargetInput=null,streamTrack=null;
+let scanTargetInput=null,streamTrack=null,scanTimer=null,scanStream=null;
 async function startScan(targetInput){
-  scanTargetInput=targetInput;
-  if(!('BarcodeDetector' in window)){
-    const code=prompt("Enter scanned barcode number manually:");
-    if(code && scanTargetInput){scanTargetInput.value=code;if(scanTargetInput===$("q"))render()}
-    return;
-  }
-  $("scandlg").showModal();
+  scanTargetInput=targetInput;$("scandlg").showModal();$("scanStatus").textContent="Starting camera…";
   try{
-    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
-    $("scanVideo").srcObject=stream;streamTrack=stream.getVideoTracks()[0];
-    const detector=new BarcodeDetector({formats:['code_128','ean_13','ean_8','qr_code','upc_a','data_matrix']});
-    const interval=setInterval(async()=>{
-      try{
-        const barcodes=await detector.detect($("scanVideo"));
-        if(barcodes.length>0){
-          clearInterval(interval);
-          const found=barcodes[0].rawValue;
-          if(scanTargetInput){scanTargetInput.value=found;if(scanTargetInput===$("q"))render()}
-          stopScan();
-        }
-      }catch(err){}
-    },500);
-  }catch(e){
-    alert("Camera access failed: "+e.message);stopScan();
-  }
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error("Camera access is not available in this app context.");
+    scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}}});
+    const video=$("scanVideo");video.srcObject=scanStream;streamTrack=scanStream.getVideoTracks()[0];await video.play();
+    const detector=("BarcodeDetector" in window)?new BarcodeDetector({formats:["code_128","ean_13","ean_8","qr_code","upc_a","data_matrix"]}):null;
+    const canvas=document.createElement("canvas"),ctx=canvas.getContext("2d",{willReadFrequently:true});
+    if(!detector&&!window.jsQR){$("scanStatus").textContent="Scanner library unavailable. Close and enter the code manually.";return}
+    $("scanStatus").textContent="Point the rear camera at a QR code or barcode.";
+    scanTimer=setInterval(async()=>{try{let value="";if(detector){const found=await detector.detect(video);if(found.length)value=found[0].rawValue}else if(video.videoWidth){canvas.width=video.videoWidth;canvas.height=video.videoHeight;ctx.drawImage(video,0,0);const found=window.jsQR(ctx.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height);if(found)value=found.data}if(value){const target=scanTargetInput;target.value=value;if(target===$("q"))render();stopScan()}}catch(e){}},350);
+  }catch(e){stopScan();alert("Camera access failed: "+e.message)}
 }
-function stopScan(){
-  if(streamTrack){streamTrack.stop();streamTrack=null}
-  try{$("scandlg").close()}catch(e){}
-}
+function stopScan(){if(scanTimer){clearInterval(scanTimer);scanTimer=null}if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null;streamTrack=null}try{$("scanVideo").srcObject=null;if($("scandlg").open)$("scandlg").close()}catch(e){}}
+
 $("scanBtn").onclick=()=>startScan($("q"));
 $("formScanBtn").onclick=()=>startScan($("barcode"));
 $("closeScan").onclick=stopScan;
-
 $("t1").onclick=()=>{$("lf").classList.remove("hide");$("sg").classList.add("hide");$("t1").classList.add("on");$("t2").classList.remove("on");$("am").textContent=""};
 $("t2").onclick=()=>{$("sg").classList.remove("hide");$("lf").classList.add("hide");$("t2").classList.add("on");$("t1").classList.remove("on");$("am").textContent=""};
 $("lf").onsubmit=async e=>{e.preventDefault();$("am").textContent="";
@@ -469,9 +489,8 @@ $("sf").onsubmit=async e=>{e.preventDefault();const u=$("su").value.trim().toLow
   }catch(x){$("sm").style.color="var(--red)";$("sm").textContent=x.code==="auth/email-already-in-use"?"That username is taken.":"Couldn’t create login: "+x.message}};
 $("ulist").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
   try{await updateDoc(doc(db,"users",b.dataset.u),{active:b.dataset.on==="1"})}catch(x){alert(x.message)}};
-
 async function boot(u){
-  unsubs.forEach(f=>f());unsubs=[];me=null;items=[];costs={};shops={};ostock={};subbed={};
+  unsubs.forEach(f=>f());unsubs=[];me=null;items=[];salesRows=[];costs={};shops={};ostock={};subbed={};
   if(!u){$("in").classList.add("hide");$("auth").classList.remove("hide");$("add").classList.add("hide");return}
   let p=null;try{const s=await getDoc(doc(db,"users",u.uid));p=s.exists()?s.data():null}catch(e){}
   if(!p||!p.active){await signOut(auth);$("am").textContent="This login is disabled or not set up. Ask your shop admin.";return}
@@ -482,6 +501,7 @@ async function boot(u){
   const sid=p.shopId,adm=p.role==="admin";$("staff").classList.toggle("hide",!adm);
   try{const s=await getDoc(doc(db,"shops",sid));if(s.exists())$("who").textContent+=" · "+s.data().name}catch(e){}
   unsubs.push(onSnapshot(collection(db,"shops",sid,"stock"),s=>{items=s.docs.map(d=>({...d.data(),id:d.id}));render()},e=>alert("Cloud error: "+e.message)));
+  unsubs.push(onSnapshot(query(collection(db,"shops",sid,"sales"),orderBy("at","desc"),limit(500)),s=>{salesRows=s.docs.map(d=>({...d.data(),id:d.id}));renderChart()},e=>{console.warn("Sales history unavailable:",e.message);$("chartNote").textContent="Sales history could not be loaded. Check Firestore permissions."}));
   unsubs.push(onSnapshot(collection(db,"shops",sid,"private"),s=>{costs={};s.docs.forEach(d=>costs[d.id]=d.data().cost||0);render()}));
   if(adm){
     unsubs.push(onSnapshot(query(collection(db,"users"),where("shopId","==",sid)),s=>{users=s.docs.map(d=>({...d.data(),id:d.id}));renderUsers()}));
