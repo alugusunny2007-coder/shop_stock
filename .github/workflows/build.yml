@@ -14,14 +14,11 @@ jobs:
           java-version: 17
       - name: Build debug APK
         run: |
-          mkdir www
+          mkdir -p www
           cp index.html firebase-config.js manifest.json icon-192.png icon-512.png www/
           npm install
-          npx cap add android
+          if [ ! -d "android" ]; then npx cap add android; fi
           npx cap sync android
-          for f in $(find android/app/src/main/res -name 'ic_launcher*.png'); do
-            sz=$(identify -format '%wx%h' "$f" 2>/dev/null) && convert icon-512.png -resize "${sz}!" "$f" || true
-          done
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
