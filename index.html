@@ -8,8 +8,8 @@
 <meta name="theme-color" content="#2b7a38">
 <link rel="icon" href="icon-192.png">
 <style>
-:root{--bg:#eef3ec;--card:#fff;--ink:#16251a;--muted:#5d6f61;--line:#cfdacc;--green:#2b7a38;--on:#fff;--amber:#a85f00;--amberbg:#fff0d6;--red:#b3261e;--redbg:#fde3e0;--okbg:#e0f2e2}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1a12;--card:#18271c;--ink:#e8f1ea;--muted:#9bb0a0;--line:#2c4231;--green:#5cc06c;--on:#0f1a12;--amber:#ffc15a;--amberbg:#3a2c0e;--red:#ff8c82;--redbg:#3d1916;--okbg:#17321c;color-scheme:dark}}
+:root{--bg:#eef3ec;--card:#fff;--ink:#16251a;--muted:#5d6f61;--line:#cfdacc;--green:#2b7a38;--on:#fff;--amber:#a85f00;--amberbg:#fff0d6;--red:#b3261e;--redbg:#fde3e0;--okbg:#e0f2e2;--blue:#1976d2;--bluebg:#e3f2fd}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a12;--card:#18271c;--ink:#e8f1ea;--muted:#9bb0a0;--line:#2c4231;--green:#5cc06c;--on:#0f1a12;--amber:#ffc15a;--amberbg:#3a2c0e;--red:#ff8c82;--redbg:#3d1916;--okbg:#17321c;--blue:#64b5f6;--bluebg:#0d263a;color-scheme:dark}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 main{max-width:660px;margin:0 auto;padding:16px 14px 90px}
@@ -20,44 +20,30 @@ h1{font-size:26px;font-weight:800;margin:4px 0}
 .s b{display:block;font-size:19px;font-weight:800}.s span{font-size:13px;color:var(--muted)}
 .s.bad{background:var(--redbg);border-color:var(--red)}.s.bad b{color:var(--red)}
 .s.warn{background:var(--amberbg);border-color:var(--amber)}.s.warn b{color:var(--amber)}
-.bar,.act{display:flex;gap:8px}.bar{margin-bottom:12px}
+.bar,.act{display:flex;gap:8px}.bar{margin-bottom:12px;flex-wrap:wrap}
+.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;width:100%}
+.cat-tabs button{font-size:13px;padding:4px 10px;min-height:34px;white-space:nowrap;border-radius:20px}
+.cat-tabs .on{background:var(--green);color:var(--on);border-color:var(--green)}
 input,select,button{font:inherit;color:var(--ink)}
 input,select{width:100%;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;min-height:44px}
 :focus-visible{outline:3px solid var(--green);outline-offset:1px}
 button{cursor:pointer;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);padding:8px 14px}
 button.pri{background:var(--green);color:var(--on);border-color:var(--green);font-weight:700}
+button.wa{background:#25D366;color:#fff;border-color:#25D366;font-weight:700}
 .item{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:10px;padding:12px;margin-bottom:10px}
 .item.soon{border-left-color:var(--amber)}.item.exp{border-left-color:var(--red)}
 .top{display:flex;justify-content:space-between;gap:8px}.nm{font-weight:700;font-size:17px}.sb{color:var(--muted);font-size:14px}
-.tag{font-size:13px;font-weight:700;border-radius:20px;padding:2px 10px;height:fit-content;white-space:nowrap;background:var(--okbg);color:var(--green)}
-.soon .tag{background:var(--amberbg);color:var(--amber)}.exp .tag{background:var(--redbg);color:var(--red)}
-.g{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;margin:8px 0;font-size:14px;color:var(--muted)}
+.tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:12px;font-weight:700;border-radius:20px;padding:2px 8px;height:fit-content;white-space:nowrap;background:var(--okbg);color:var(--green)}
+.tag.cat{background:var(--bluebg);color:var(--blue)}
+.soon .tag.exp-tag{background:var(--amberbg);color:var(--amber)}.exp .tag.exp-tag{background:var(--redbg);color:var(--red)}
+.item-body{display:flex;gap:12px;margin-top:8px}
+.thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line);flex-shrink:0}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;font-size:14px;color:var(--muted);width:100%}
 .g b{color:var(--ink);font-weight:600}.g .w{grid-column:1/-1}
 .act button{flex:1;padding:6px}
 .empty{text-align:center;color:var(--muted);padding:40px 10px}
 .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:24px}
-.sg{background:var(--card);border:1px solid var(--line);border-radius:8px;margin:-4px 0 8px;overflow:hidden}
-.sg button{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);border-radius:0;min-height:42px;font-size:15px}
-.wm{text-align:center;color:var(--muted);opacity:.55;font-size:12px;margin:18px 0 4px;letter-spacing:.04em}
-.wm .logo{width:26px;height:26px;color:var(--muted)}
-.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.keys button{min-height:54px;font-size:20px}
-.keys .op{background:var(--okbg);color:var(--green);font-weight:700}.keys .eq{background:var(--green);color:var(--on);border-color:var(--green)}.keys button:active{transform:scale(.9)}
-.okflash{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);background:var(--card);color:var(--green);border:1px solid var(--line);border-radius:18px;padding:22px 30px;text-align:center;font-weight:700;box-shadow:0 8px 28px rgba(0,0,0,.3);z-index:50;animation:pop .3s ease both}
-.okflash path{stroke-dasharray:40;stroke-dashoffset:40;animation:draw .5s .15s ease forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-#v-stock,#v-sales,#v-calc{animation:fadein .3s ease both}
-@keyframes fadein{from{opacity:0}to{opacity:1}}
-@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
-#auth,#in{animation:fadein .35s ease both}
-.anim .item,.anim .s{animation:up .4s ease both}
-.anim .item:nth-child(2),.anim .s:nth-child(2){animation-delay:.05s}.anim .item:nth-child(3),.anim .s:nth-child(3){animation-delay:.1s}
-.anim .item:nth-child(4),.anim .s:nth-child(4){animation-delay:.15s}.anim .item:nth-child(n+5),.anim .s:nth-child(n+5){animation-delay:.2s}
-dialog[open]{animation:pop .22s ease both}
-.fab{animation:pop .5s ease both}
-button{transition:transform .12s ease,box-shadow .12s ease}button:active{transform:scale(.96)}
-.tag{transition:background .3s}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));box-shadow:0 2px 8px rgba(0,0,0,.3);border-radius:28px;padding:0 22px;min-height:52px}
 dialog{border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);width:min(460px,calc(100% - 24px));padding:16px;max-height:92vh;overflow:auto}
 dialog::backdrop{background:rgba(0,0,0,.5)}
@@ -71,59 +57,46 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1}.tabs .on{background:var(--green);color:var(--on);border-color:var(--green)}
 .chk{display:flex;gap:8px;align-items:flex-start;color:var(--ink)}.chk input{width:22px;min-height:22px;margin-top:2px}
 .lim{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.lim input{width:90px;min-height:36px;padding:4px 8px}
-body{background:radial-gradient(900px 420px at 50% -140px,var(--okbg),transparent),var(--bg)}
-html{scroll-behavior:smooth}
-.brand{display:flex;align-items:center;gap:10px;margin:4px 0 10px}.brand h1{margin:0}
-.brandlogo{width:40px;height:40px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.22));animation:pop .6s ease both}
-body.out main{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-bottom:30px}
-body.out .brand{flex-direction:column;gap:6px;margin-bottom:16px}
-body.out .brandlogo{width:68px;height:68px}
-body.out #auth{margin-top:0;width:100%;max-width:400px;margin-left:auto;margin-right:auto;box-shadow:0 12px 32px rgba(0,0,0,.14)}
-.item{box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .2s ease,box-shadow .2s ease}
-.item:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.12)}
-.s{box-shadow:0 2px 8px rgba(0,0,0,.05);border-top:3px solid var(--green);transition:transform .2s ease}
-.s.warn{border-top-color:var(--amber)}.s.bad{border-top-color:var(--red)}.s:hover{transform:translateY(-2px)}
-.tabs button{transition:background .25s ease,color .25s ease,transform .12s ease}
-.soon .tag{animation:pulse 2.2s ease-in-out infinite}
-@keyframes pulse{50%{opacity:.6}}
-@keyframes rise{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
-#auth{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
-dialog::backdrop{animation:fadein .25s ease both}
-.empty::before{content:"🌱";display:block;font-size:38px;margin-bottom:6px;animation:pop .6s ease both}
-.sg{animation:up .2s ease both}
-button.pri{background-image:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0))}
-input,select{transition:border-color .2s ease,box-shadow .2s ease}
-input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(43,122,56,.2)}
+.img-preview{width:100%;height:100px;object-fit:cover;border-radius:8px;margin-top:6px;display:none}
 </style>
 </head>
-<body class="out">
+<body>
 <main>
-  <div class="brand"><svg class="brandlogo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lgx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#48b05b"/><stop offset="1" stop-color="#1d6a2d"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lgx)"/><path d="M17 45C17 29 27 19 47 17c0 17-10 28-24 28-2 0-4-.3-6-.9z" fill="#fff"/><path d="M19 46c6-10 14-17 24-22" stroke="#2b7a38" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg><h1>Shop stock</h1></div>
+  <h1>Shop stock</h1>
   <div id="auth" class="box">
     <div class="tabs"><button id="t1" class="on" type="button">Log in</button><button id="t2" type="button">New shop</button></div>
     <form id="lf">
-      <label>Username<input id="lu" name="shopuser" autocomplete="off" autocapitalize="none" required></label>
-      <label>Password<input id="lp" name="shoppass" type="password" autocomplete="new-password" required></label>
+      <label>Username<input id="lu" autocomplete="username" autocapitalize="none" required></label>
+      <label>Password<input id="lp" type="password" autocomplete="current-password" required></label>
       <button class="pri" style="width:100%" type="submit">Log in</button>
     </form>
     <form id="sg" class="hide">
       <label>Shop name<input id="gn" required></label>
       <label>Choose a username<input id="gu" autocapitalize="none" required></label>
       <label>Password (6+ characters)<input id="gp" type="password" minlength="6" autocomplete="new-password" required></label>
+      <label class="chk"><input id="ga" type="checkbox" required><span>I understand that the app owner can view my selling prices and stock levels for price monitoring. My cost prices stay private.</span></label>
       <button class="pri" style="width:100%" type="submit">Create shop</button>
     </form>
     <div class="msg" id="am" role="alert"></div>
-    <div class="wm">@ARtechnologies</div>
   </div>
   <div id="in" class="hide">
     <div class="who"><span id="who"></span><button id="out" type="button">Log out</button></div>
     <div id="app" class="hide">
-      <div class="tabs" id="vt"><button type="button" data-v="stock" class="on">Stock</button><button type="button" data-v="sales">Sales</button><button type="button" data-v="calc">Calculator</button></div>
-      <div id="v-stock">
       <div class="sum" id="sum"></div>
+      
+      <div class="cat-tabs" id="catTabs">
+        <button class="on" data-cat="all">All</button>
+        <button data-cat="Insecticide">Insecticides</button>
+        <button data-cat="Fungicide">Fungicides</button>
+        <button data-cat="Acaricide">Acaricides</button>
+        <button data-cat="Herbicide">Herbicides</button>
+        <button data-cat="PGR">PGRs</button>
+      </div>
+
       <div class="bar">
-        <input id="q" type="search" placeholder="Search name, brand or lot no." aria-label="Search">
-        <select id="f" aria-label="Filter" style="max-width:150px"><option value="all">All</option><option value="exp">Expired</option><option value="soon">Expiring soon</option></select>
+        <input id="q" type="search" placeholder="Search name, brand, lot or barcode..." aria-label="Search">
+        <button id="scanBtn" type="button" style="min-width:44px;padding:0 10px" title="Scan Barcode">📷</button>
+        <select id="f" aria-label="Filter" style="max-width:130px"><option value="all">All expiry</option><option value="exp">Expired</option><option value="soon">Expiring soon</option></select>
       </div>
       <div id="list"></div>
       <div class="box hide" id="staff">
@@ -136,98 +109,145 @@ input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(43,
         </form>
         <div id="ulist" style="margin-top:10px"></div>
         <b style="display:block;margin-top:14px">Recent activity</b><div id="log">No activity yet.</div>
-        <button id="clog" type="button" style="margin-top:8px">Clear activity history</button>
         <div class="msg" id="sm" role="status"></div>
-      </div>
-      </div>
-      <div id="v-sales" class="hide">
-        <div class="tabs" id="pt"><button type="button" data-p="today" class="on">Today</button><button type="button" data-p="week">Week</button><button type="button" data-p="month">Month</button><button type="button" data-p="custom">Custom</button></div>
-        <div class="r2 hide" id="cr"><label>From<input id="rf" type="date"></label><label>To<input id="rt" type="date"></label></div>
-        <div class="tabs" id="pf"><button type="button" data-f="all" class="on">All</button><button type="button" data-f="cash">Cash</button><button type="button" data-f="credit">Credit</button></div>
-        <div class="r2" style="margin-bottom:10px"><input id="sfq" type="search" placeholder="Search farmer name" aria-label="Search by farmer name"><input id="siq" type="search" placeholder="Search item name" aria-label="Search by item name"></div>
-        <div class="sum" id="rsum"></div>
-        <div id="rlist"></div>
-        <div class="act" style="margin-top:8px"><button id="rcopy" type="button" class="pri">Copy report</button></div>
-        <div class="msg" id="rmsg" role="status"></div>
-      </div>
-      <div id="v-calc" class="hide">
-        <div class="box" style="margin-top:0"><b>Calculator</b>
-          <input id="cd" readonly value="0" aria-label="Display" style="font-size:26px;text-align:right;margin:8px 0">
-          <div class="keys" id="keys"></div></div>
-        <div class="box"><b>Buying and selling check</b>
-          <div class="r2" style="margin-top:10px">
-            <label>Pack size<input id="bs" type="number" min="0" step="any"></label>
-            <label>Unit<select id="bu"><option value="L">Litre (L)</option><option value="ml">Millilitre (ml)</option><option value="kg">Kilogram (kg)</option><option value="g">Gram (g)</option></select></label>
-            <label>Cost per pack<input id="bc" type="number" min="0" step="any"></label>
-            <label>Selling price per pack<input id="bp" type="number" min="0" step="any"></label>
-            <label>Packs bought<input id="bn" type="number" min="0" step="any"></label>
-            <label>Target profit % on cost<input id="bt" type="number" min="0" step="any"></label>
-          </div>
-          <div id="bout" class="tot" style="line-height:1.8">Enter the numbers to see the result.</div></div>
       </div>
     </div>
     <div id="owner" class="hide">
       <div class="sum" id="osum"></div>
-      <input id="oq" type="search" placeholder="Search shop or admin name" aria-label="Search" style="margin-bottom:12px">
+      <input id="oq" type="search" placeholder="Search product, brand or shop" aria-label="Search" style="margin-bottom:12px">
       <div id="ogroups"></div>
-      <div class="box" id="nbox"><b>Suggestion names</b>
-        <form id="nf" style="margin-top:10px">
-          <div class="r2"><label>Technical name<input id="nt" required placeholder="e.g. Chlorpyrifos 50% EC"></label><label>Common name<input id="nc" required placeholder="e.g. Chlorpyrifos"></label></div>
-          <label>Short forms, separated by commas<input id="na" placeholder="chloro, chlorpyriphos"></label>
-          <label>Type<select id="nk"><option>Insecticide</option><option>Fungicide</option><option>Herbicide / weedicide</option><option>Acaricide</option><option>Other</option></select></label>
-          <button class="pri" type="submit">Add name</button>
-        </form>
-        <p class="sb">Tick a built-in name to show it to shops. Untick to hide it.</p>
-        <div id="nlist"></div></div>
-      <div class="note">Stock, sales and prices of shops are not visible here.</div>
+      <div class="note">Cost prices are private to each shop and are not shown here.</div>
     </div>
-    <div class="wm"><svg class="logo" viewBox="0 0 24 24" role="img" aria-label="ARtechnologies"><rect x="1" y="1" width="22" height="22" rx="6" fill="currentColor" opacity=".25"/><text x="12" y="16.5" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor">AR</text></svg></div>
   </div>
-  <p class="note">App owner can see only your shop name, logins and start date.</p>
+  <p class="note">The app owner can view selling prices and stock levels of all shops for price monitoring. Cost prices stay private to each shop.</p>
 </main>
 <button class="pri fab hide" id="add" type="button">Add stock</button>
+
+<!-- Add / Edit Stock Dialog -->
 <dialog id="dlg"><form id="frm" method="dialog">
   <b id="dt" style="font-size:18px">Add stock</b>
-  <label>Common name<input id="common" autocomplete="off" required placeholder="e.g. Urea or chloro"></label><div class="sg hide" id="sgc"></div>
-  <label>Technical name<input id="tech" autocomplete="off"></label><div class="sg hide" id="sgt"></div>
-  <label>Brand name<input id="brand"></label>
+  
+  <label>Category
+    <select id="cat" required>
+      <option value="Insecticide">Insecticide (Pesticide)</option>
+      <option value="Fungicide">Fungicide</option>
+      <option value="Acaricide">Acaricide (Miticide)</option>
+      <option value="Herbicide">Herbicide (Weedicide)</option>
+      <option value="PGR">PGR / Biostimulant</option>
+    </select>
+  </label>
+
+  <label>Common name
+    <input id="common" list="preset-list" required placeholder="e.g. Coragen, Urea, Ulala">
+  </label>
+  <datalist id="preset-list">
+    <!-- Karimnagar Popular Agrochemical Presets -->
+    <option value="Chlorantraniliprole 18.5% SC (Coragen / Sholey)">
+    <option value="Emamectin Benzoate 5% SG (Proclaim / War)">
+    <option value="Flonicamid 50% WG (Ulala)">
+    <option value="Imidacloprid 17.8% SL (Confidor)">
+    <option value="Fipronil 5% SC / 80% WG (Regent / Jump)">
+    <option value="Profenofos 40% + Cypermethrin 4% EC (Polytrin C)">
+    <option value="Thiamethoxam 25% WG (Actara)">
+    <option value="Chlorpyrifos 50% + Cypermethrin 5% EC (505)">
+    <option value="Spinetoram 11.7% SC (Delegate)">
+    <option value="Broflanilide 20% SC (Exponus)">
+    <option value="Diafenthiuron 50% WP (Pegasus)">
+    <option value="Dinotefuran 20% SG (Osheen)">
+    <option value="Azoxystrobin 18.2% + Difenoconazole 11.4% SC (Amistar Top)">
+    <option value="Tebuconazole 50% + Trifloxystrobin 25% WG (Nativo)">
+    <option value="Carbendazim 12% + Mancozeb 63% WP (Saaf)">
+    <option value="Hexaconazole 5% EC (Contaf)">
+    <option value="Validamycin 3% L (Sheathmar)">
+    <option value="Thiophanate Methyl 70% WP (Roko)">
+    <option value="Fenpyroximate 5% EC (Pyrote)">
+    <option value="Spiromesifen 22.9% SC (Oberon)">
+    <option value="Propargite 57% EC (Omite)">
+    <option value="Bispyribac Sodium 10% SC (Nominee Gold)">
+    <option value="Pendimethalin 30% EC / 38.7% CS (Stomp / Panda)">
+    <option value="Glyphosate 41% SL (Roundup / Glycel)">
+    <option value="Quizalofop-Ethyl 5% EC (Targa Super)">
+    <option value="Atrazine 50% WP (Atratrap)">
+    <option value="Pretilachlor 50% EC (Rifit)">
+    <option value="Glufosinate Ammonium 13.5% SL (Basta)">
+  </datalist>
+
+  <label>Technical name<input id="tech" placeholder="e.g. Chlorantraniliprole"></label>
+  <label>Brand / Company<input id="brand" placeholder="e.g. FMC, Syngenta, Bayer"></label>
+  
   <div class="r2">
-    <label>Lot / batch no.<input id="lot" required></label>
-    <label>Supplier<input id="sup" autocomplete="off"></label><div class="sg hide" id="sgs"></div>
+    <label>Lot / Batch no.<input id="lot" required></label>
+    <label>Barcode no. <button type="button" id="formScanBtn" style="font-size:12px;padding:2px 6px;min-height:24px">📷 Scan</button><input id="barcode" placeholder="Optional"></label>
+    <label>Supplier<input id="sup"></label>
     <label>Date of purchase<input id="bought" type="date" required></label>
     <label>Expiry date<input id="exp" type="date" required></label>
     <label>Pack size<input id="ps" type="number" min="0" step="any" required></label>
-    <label>Pack unit<select id="pu"><option value="L">Litre (L)</option><option value="ml">Millilitre (ml)</option><option value="kg">Kilogram (kg)</option><option value="g">Gram (g)</option></select></label>
+    <label>Pack unit
+      <select id="pu">
+        <option value="L">Litre (L)</option>
+        <option value="ml">Millilitre (ml)</option>
+        <option value="kg">Kilogram (kg)</option>
+        <option value="g">Gram (g)</option>
+      </select>
+    </label>
     <label>Number of packs<input id="packs" type="number" min="0" step="any" required></label><span></span>
     <label>Cost per pack<input id="cost" type="number" min="0" step="any" required></label>
     <label>Selling price per pack<input id="sell" type="number" min="0" step="any" required></label>
   </div>
+
+  <label>Product Photo (Optional)
+    <input type="file" id="photoInput" accept="image/*">
+    <img id="photoPreview" class="img-preview" alt="Product preview">
+  </label>
+
   <div class="tot" id="ftot"></div>
   <div class="act"><button type="button" id="cx">Cancel</button><button class="pri" type="submit">Save</button></div>
 </form></dialog>
+
+<!-- Sell Modal Dialog -->
 <dialog id="sdlg"><form id="sfrm" method="dialog">
   <b id="st" style="font-size:18px">Sell</b>
-  <div class="r2" style="margin-top:8px"><label>Packs sold<input id="sq" type="number" min="0" step="any" required></label>
-  <label>Price per pack<input id="sp2" type="number" min="0" step="any" required></label></div>
-  <label>Payment<select id="spay"><option value="cash">Cash</option><option value="credit">Credit</option></select></label>
-  <label>Farmer name<input id="sfn" autocomplete="off" required></label><div class="sg hide" id="sgf"></div>
-  <div class="sb" id="sfh" style="margin:-4px 0 8px"></div>
-  <label>Farmer phone (optional)<input id="sfp" type="tel" autocomplete="off"></label>
-  <div class="tot" id="stot"></div>
-  <div class="act"><button type="button" id="scx">Cancel</button><button class="pri" type="submit">Save sale</button></div>
+  <label>Payment Mode
+    <select id="paymode" required>
+      <option value="Cash">Cash Sale</option>
+      <option value="Credit">Credit Sale (Udhar)</option>
+    </select>
+  </label>
+  <label>Packs sold<input id="sq" type="number" min="0" step="any" required></label>
+  <label>Farmer Name (Optional)<input id="cname" placeholder="e.g. Ramesh"></label>
+  <label>Farmer WhatsApp Mobile (Optional)<input id="cphone" type="tel" placeholder="e.g. 9876543210"></label>
+  <div class="tot" id="stot" style="margin-top:8px"></div>
+  <div class="act">
+    <button type="button" id="scx">Cancel</button>
+    <button class="pri" type="submit">Reduce stock</button>
+  </div>
 </form></dialog>
-<div id="ok" class="okflash hide"><svg viewBox="0 0 52 52" width="64" height="64"><circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M14 27l8 8 16-17" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><div id="okt"></div></div>
+
+<!-- Barcode Scanner Modal -->
+<dialog id="scandlg">
+  <b style="font-size:18px">Scan Barcode</b>
+  <div style="margin:12px 0;text-align:center">
+    <video id="scanVideo" style="width:100%;max-height:260px;background:#000;border-radius:8px" autoplay playsinline></video>
+    <p id="scanStatus" style="font-size:13px;color:var(--muted)">Point camera at barcode...</p>
+  </div>
+  <div class="act"><button type="button" id="closeScan">Close Scanner</button></div>
+</dialog>
+
 <script type="module">
 import {firebaseConfig} from "./firebase-config.js";
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged,createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,doc,getDoc,setDoc,updateDoc,deleteDoc,onSnapshot,addDoc,query,orderBy,limit,where,getDocs,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,collection,doc,getDoc,setDoc,updateDoc,deleteDoc,onSnapshot,addDoc,query,orderBy,limit,where} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const $=i=>document.getElementById(i);
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const mail=u=>u.trim().toLowerCase().replace(/[^a-z0-9._-]/g,"")+"@shopstock.app";
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const nid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
 let me=null,items=[],costs={},users=[],unsubs=[],editId=null,sellId=null,delArm=null,secAuth=null,signingUp=false,shops={},ostock={},limits={},subbed={};
+let selectedCategory="all",photoBase64="",lastSaleData=null;
+
 let pref={cur:"₹",warn:60};try{Object.assign(pref,JSON.parse(localStorage.getItem("ss-pref")))}catch(e){}
 const money=n=>pref.cur+(Math.round(n*100)/100).toLocaleString(undefined,{maximumFractionDigits:2});
 const num=n=>(Math.round(n*1000)/1000).toLocaleString(undefined,{maximumFractionDigits:3});
@@ -239,6 +259,13 @@ const F={L:1,ml:.001,kg:1,g:.001},base=u=>u==="L"||u==="ml"?"L":"kg",total=it=>i
 const cost=it=>costs[it.id]||0;
 const addLog=t=>{try{addDoc(collection(db,"shops",me.shopId,"log"),{by:me.username,at:Date.now(),text:t})}catch(e){}};
 
+// Handle Category Tabs
+$("catTabs").onclick=e=>{
+  const b=e.target.closest("button");if(!b)return;
+  Array.from($("catTabs").children).forEach(c=>c.classList.remove("on"));
+  b.classList.add("on");selectedCategory=b.dataset.cat;render();
+};
+
 function render(){
   let c=0,sell=0,soon=0,exp=0,loss=0,L=0,kg=0;
   items.forEach(it=>{const s=st(it);
@@ -247,147 +274,180 @@ function render(){
   $("sum").innerHTML=`<div class="s"><b>${money(c)}</b><span>Stock value (cost)</span></div><div class="s"><b>${money(sell-c)}</b><span>Expected profit</span></div>
   <div class="s"><b>${num(L)} L</b><span>Liquid in stock</span></div><div class="s"><b>${num(kg)} kg</b><span>Solid in stock</span></div>
   <div class="s ${soon?"warn":""}"><b>${soon}</b><span>Expiring within ${pref.warn} days</span></div><div class="s ${exp?"bad":""}"><b>${exp?money(loss):0}</b><span>Expired loss (${exp} lots)</span></div>`;
+  
   const q=$("q").value.trim().toLowerCase(),f=$("f").value,adm=me&&me.role==="admin";
-  const rows=items.filter(it=>(!q||[it.common,it.tech,it.brand,it.lot].join(" ").toLowerCase().includes(q))&&(f==="all"||st(it)===f)).sort((a,b)=>a.exp<b.exp?-1:a.exp>b.exp?1:0);
-  $("list").innerHTML=rows.length?rows.map(it=>`<div class="item ${st(it)}" data-id="${it.id}"><div class="top"><div><div class="nm">${esc(it.common)}</div><div class="sb">${[it.tech,it.brand].filter(Boolean).map(esc).join(" · ")||"No technical or brand name"}</div></div><span class="tag">${lab(it)}</span></div>
-  <div class="g"><span>Lot <b>${esc(it.lot)}</b></span><span>Expiry <b>${fmt(it.exp)}</b></span><span>Bought <b>${fmt(it.bought)}</b></span><span>Supplier <b>${esc(it.sup||"–")}</b></span>
-  <span class="w">Packing <b>${num(it.ps)} ${esc(it.pu)} × ${num(it.packs)} packs = ${num(total(it))} ${base(it.pu)}</b></span><span>Cost / pack <b>${money(cost(it))}</b></span><span>Selling / pack <b>${money(it.sell)}</b></span></div>
-  <div class="act"><button data-a="sell" type="button">Sell</button><button data-a="edit" type="button">Edit</button>${adm?`<button data-a="del" type="button">${delArm===it.id?"Tap again to delete":"Delete"}</button>`:""}</div></div>`).join(""):`<div class="empty">${items.length?"No lots match.":"No stock yet. Tap “Add stock” to enter your first lot."}</div>`;
+  const rows=items.filter(it=>{
+    const matchCat=selectedCategory==="all"||(it.cat||"Insecticide")===selectedCategory;
+    const matchQ=!q||[it.common,it.tech,it.brand,it.lot,it.barcode,it.cat].join(" ").toLowerCase().includes(q);
+    const matchF=f==="all"||st(it)===f;
+    return matchCat && matchQ && matchF;
+  }).sort((a,b)=>a.exp<b.exp?-1:a.exp>b.exp?1:0);
+
+  $("list").innerHTML=rows.length?rows.map(it=>`<div class="item ${st(it)}" data-id="${it.id}">
+    <div class="top">
+      <div>
+        <div class="nm">${esc(it.common)}</div>
+        <div class="sb">${[it.tech,it.brand].filter(Boolean).map(esc).join(" · ")||"No technical or brand name"}</div>
+      </div>
+      <div class="tags">
+        <span class="tag cat">${esc(it.cat||"Insecticide")}</span>
+        <span class="tag exp-tag">${lab(it)}</span>
+      </div>
+    </div>
+    <div class="item-body">
+      ${it.photo?`<img class="thumb" src="${it.photo}" alt="Product">`:""}
+      <div class="g">
+        <span>Lot <b>${esc(it.lot)}</b> ${it.barcode?`· Barcode <b>${esc(it.barcode)}</b>`:""}</span>
+        <span>Expiry <b>${fmt(it.exp)}</b></span>
+        <span>Bought <b>${fmt(it.bought)}</b></span>
+        <span>Supplier <b>${esc(it.sup||"–")}</b></span>
+        <span class="w">Packing <b>${num(it.ps)} ${esc(it.pu)} × ${num(it.packs)} packs = ${num(total(it))} ${base(it.pu)}</b></span>
+        <span>Cost / pack <b>${money(cost(it))}</b></span>
+        <span>Selling / pack <b>${money(it.sell)}</b></span>
+      </div>
+    </div>
+    <div class="act" style="margin-top:10px">
+      <button data-a="sell" type="button">Sell</button>
+      <button data-a="edit" type="button">Edit</button>
+      ${adm?`<button data-a="del" type="button">${delArm===it.id?"Tap again to delete":"Delete"}</button>`:""}
+    </div>
+  </div>`).join(""):`<div class="empty">${items.length?"No lots match search/category.":"No stock yet. Tap “Add stock” to enter your first lot."}</div>`;
 }
+
 function renderUsers(){$("ulist").innerHTML=users.map(u=>`<div class="u"><span>${esc(u.username)} · ${u.role}${u.active?"":" · disabled"}</span>${u.id===me.uid?"":`<button data-u="${u.id}" data-on="${u.active?0:1}" type="button">${u.active?"Disable":"Enable"}</button>`}</div>`).join("")}
 
-let ousers=[];
+const ppu=r=>r.sell/((r.ps*F[r.pu])||1),lim=k=>limits[k]&&limits[k].max;
 function renderOwner(){
-  const q=$("oq").value.trim().toLowerCase();
-  const adm=sid=>ousers.filter(u=>u.shopId===sid&&u.role==="admin").map(u=>u.username);
-  const cnt=sid=>ousers.filter(u=>u.shopId===sid).length;
-  const ids=Object.keys(shops).filter(sid=>!q||((shops[sid].name||"")+" "+adm(sid).join(" ")).toLowerCase().includes(q)).sort((x,y)=>(shops[y].createdAt||0)-(shops[x].createdAt||0));
-  $("osum").innerHTML=`<div class="s"><b>${Object.keys(shops).length}</b><span>Shops</span></div><div class="s"><b>${ousers.filter(u=>u.role!=="owner").length}</b><span>Logins</span></div>`;
-  $("ogroups").innerHTML=ids.length?ids.map(sid=>{const sh=shops[sid];return`<div class="item"><div class="nm">${esc(sh.name)}</div><div class="g"><span>Admin <b>${esc(adm(sid).join(", ")||"–")}</b></span><span>Logins <b>${cnt(sid)}</b></span><span class="w">Created <b>${sh.createdAt?new Date(sh.createdAt).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"}):"–"}</b></span></div></div>`}).join(""):`<div class="empty">No shops yet.</div>`;
+  const q=$("oq").value.trim().toLowerCase(),g={};let lots=0,expd=0;
+  Object.keys(ostock).forEach(sid=>ostock[sid].forEach(it=>{lots++;if(st(it)==="exp")expd++;const k=it.common.trim().toLowerCase();(g[k]=g[k]||[]).push({...it,shop:(shops[sid]||{}).name||sid})}));
+  const over=k=>g[k].filter(r=>lim(k)&&ppu(r)>lim(k)).length;
+  const keys=Object.keys(g).filter(k=>!q||k.includes(q)||g[k].some(r=>(r.shop+" "+(r.brand||"")).toLowerCase().includes(q))).sort((a,b)=>over(b)-over(a)||a.localeCompare(b));
+  const flagged=Object.keys(g).reduce((a,k)=>a+over(k),0);
+  $("osum").innerHTML=`<div class="s"><b>${Object.keys(shops).length}</b><span>Shops</span></div><div class="s"><b>${lots}</b><span>Stock lots</span></div><div class="s ${flagged?"bad":""}"><b>${flagged}</b><span>Prices above limit</span></div><div class="s ${expd?"warn":""}"><b>${expd}</b><span>Expired lots</span></div>`;
+  $("ogroups").innerHTML=keys.length?keys.map(k=>{const rs=g[k].slice().sort((a,b)=>ppu(b)-ppu(a)),n=over(k);
+    return`<div class="item ${n?"exp":""}"><div class="top"><div class="nm">${esc(rs[0].common)}</div><label class="lim" style="margin:0">Max per ${base(rs[0].pu)}<input data-k="${esc(k)}" type="number" min="0" step="any" value="${lim(k)||""}" aria-label="Maximum price per unit"></label></div>`+
+    rs.map(r=>`<div class="u" style="display:block"><b>${esc(r.shop)}</b> · ${esc(r.brand||"–")} · lot ${esc(r.lot)}<br><span class="sb">${money(r.sell)} per ${num(r.ps)} ${esc(r.pu)} pack · ${money(ppu(r))} per ${base(r.pu)}${lim(k)&&ppu(r)>lim(k)?" · above limit":""}</span></div>`).join("")+`</div>`}).join("") :`<div class="empty">No stock from any shop yet.</div>`;
 }
 $("oq").oninput=renderOwner;
+$("ogroups").onchange=async e=>{const i=e.target.closest("input[data-k]");if(!i)return;const k=i.dataset.k;
+  try{i.value===""?await deleteDoc(doc(db,"limits",k)):await setDoc(doc(db,"limits",k),{max:+i.value||0})}catch(x){alert("Couldn’t save limit: "+x.message)}};
+
 function startOwner(){
-  unsubs.push(onSnapshot(collection(db,"shops"),s=>{shops={};s.docs.forEach(d=>shops[d.id]=d.data());renderOwner()}));
-  unsubs.push(onSnapshot(collection(db,"users"),s=>{ousers=s.docs.map(d=>({...d.data(),id:d.id}));renderOwner()}));
+  unsubs.push(onSnapshot(collection(db,"limits"),s=>{limits={};s.docs.forEach(d=>limits[d.id]=d.data());renderOwner()}));
+  unsubs.push(onSnapshot(collection(db,"shops"),s=>{s.docs.forEach(d=>{shops[d.id]=d.data();
+    if(!subbed[d.id]){subbed[d.id]=1;unsubs.push(onSnapshot(collection(db,"shops",d.id,"stock"),ss=>{ostock[d.id]=ss.docs.map(x=>({...x.data(),id:x.id}));renderOwner()}))}});renderOwner()}));
 }
+
 const ftot=()=>{$("ftot").textContent="Total quantity: "+num((+$("ps").value||0)*(+$("packs").value||0)*F[$("pu").value])+" "+base($("pu").value)};
 ["ps","packs","pu"].forEach(i=>$(i).addEventListener("input",ftot));
 
-const DEFAULTS=[["Chlorpyrifos 50% EC","Chlorpyrifos","chloro,chlorpyriphos,chloropyriphos","Insecticide"],["Imidacloprid 17.8% SL","Imidacloprid","imida","Insecticide"],["Thiamethoxam 25% WG","Thiamethoxam","thia,thiamethox","Insecticide"],["Acephate 75% SP","Acephate","","Insecticide"],["Cypermethrin 10% EC","Cypermethrin","cyper","Insecticide"],["Lambda-cyhalothrin 5% EC","Lambda-cyhalothrin","lambda,lamda","Insecticide"],["Emamectin benzoate 5% SG","Emamectin benzoate","emamectin","Insecticide"],["Fipronil 5% SC","Fipronil","","Insecticide"],["Profenofos 50% EC","Profenofos","profe","Insecticide"],["Quinalphos 25% EC","Quinalphos","quinal","Insecticide"],["Dimethoate 30% EC","Dimethoate","dimetho","Insecticide"],["Acetamiprid 20% SP","Acetamiprid","aceta","Insecticide"],["Chlorantraniliprole 18.5% SC","Chlorantraniliprole","chlorantra","Insecticide"],["Spinosad 45% SC","Spinosad","","Insecticide"],["Buprofezin 25% SC","Buprofezin","","Insecticide"],["Mancozeb 75% WP","Mancozeb","manco","Fungicide"],["Carbendazim 50% WP","Carbendazim","carben","Fungicide"],["Copper oxychloride 50% WP","Copper oxychloride","coc,copper","Fungicide"],["Hexaconazole 5% EC","Hexaconazole","hexa","Fungicide"],["Propiconazole 25% EC","Propiconazole","propi","Fungicide"],["Azoxystrobin 23% SC","Azoxystrobin","azoxy","Fungicide"],["Tebuconazole 25.9% EC","Tebuconazole","tebu","Fungicide"],["Metalaxyl 8% + Mancozeb 64% WP","Metalaxyl + Mancozeb","metalaxyl","Fungicide"],["Thiophanate methyl 70% WP","Thiophanate methyl","thiophanate","Fungicide"],["Difenoconazole 25% EC","Difenoconazole","difeno","Fungicide"],["Glyphosate 41% SL","Glyphosate","glypho","Herbicide / weedicide"],["Atrazine 50% WP","Atrazine","atra","Herbicide / weedicide"],["Pendimethalin 30% EC","Pendimethalin","pendi","Herbicide / weedicide"],["2,4-D sodium salt 80% WP","2,4-D","24d","Herbicide / weedicide"],["Butachlor 50% EC","Butachlor","buta","Herbicide / weedicide"],["Pretilachlor 50% EC","Pretilachlor","preti","Herbicide / weedicide"],["Quizalofop-ethyl 5% EC","Quizalofop-ethyl","quizalo","Herbicide / weedicide"],["Propargite 57% EC","Propargite","propar","Acaricide"],["Spiromesifen 22.9% SC","Spiromesifen","spiro","Acaricide"],["Fenpyroximate 5% EC","Fenpyroximate","fenpy","Acaricide"],["Abamectin 1.9% EC","Abamectin","abam","Acaricide"],["Hexythiazox 5.45% EC","Hexythiazox","hexythi","Acaricide"],["Tembotrione 42% SC","Tembotrione","tembo","Herbicide / weedicide"],["Tricyclazole 75% WP","Tricyclazole","tricy,tricyclo","Fungicide"],["Isoprothiolane 40% EC","Isoprothiolane","isopro,isoprothio","Fungicide"],["Validamycin 3% L","Validamycin","valida","Fungicide"],["Chlorothalonil 75% WP","Chlorothalonil","chlorotha","Fungicide"],["Cartap hydrochloride 50% SP","Cartap hydrochloride","cartap","Insecticide"],["Pymetrozine 50% WG","Pymetrozine","pymet","Insecticide"],["Flonicamid 50% WG","Flonicamid","floni","Insecticide"],["Diafenthiuron 50% WP","Diafenthiuron","diafen","Insecticide"],["Indoxacarb 14.5% SC","Indoxacarb","indox","Insecticide"],["Bispyribac-sodium 10% SC","Bispyribac-sodium","bispy,bispyribac","Herbicide / weedicide"],["Bifenthrin 10% EC","Bifenthrin","bifen","Insecticide"],["Thiacloprid 21.7% SC","Thiacloprid","thiaclo","Insecticide"],["Novaluron 10% EC","Novaluron","novalu","Insecticide"],["Lufenuron 5.4% EC","Lufenuron","lufen","Insecticide"],["Spinetoram 11.7% SC","Spinetoram","spineto","Insecticide"],["Dinotefuran 20% SG","Dinotefuran","dinote","Insecticide"],["Pyriproxyfen 10% EC","Pyriproxyfen","pyripro","Insecticide"],["Triflumezopyrim 10% SC","Triflumezopyrim","triflu","Insecticide"],["Spirotetramat 15.31% OD","Spirotetramat","spirotet","Insecticide"],["Propineb 70% WP","Propineb","propin","Fungicide"],["Cymoxanil 8% + Mancozeb 64% WP","Cymoxanil + Mancozeb","cymoxanil","Fungicide"],["Kasugamycin 3% SL","Kasugamycin","kasuga","Fungicide"],["Streptomycin sulphate 9% + Tetracycline 1% SP","Streptomycin + Tetracycline","streptocycline,strepto","Fungicide"],["Trifloxystrobin 25% + Tebuconazole 50% WG","Trifloxystrobin + Tebuconazole","triflox","Fungicide"],["Pyraclostrobin 20% WG","Pyraclostrobin","pyraclo","Fungicide"],["Carbendazim 12% + Mancozeb 63% WP","Carbendazim + Mancozeb","carbmanco","Fungicide"],["Sulphur 80% WP","Sulphur","sulfur,gandhak","Fungicide"],["Copper hydroxide 77% WP","Copper hydroxide","cuoh","Fungicide"],["Imazethapyr 10% SL","Imazethapyr","imazeth","Herbicide / weedicide"],["Pyrazosulfuron-ethyl 10% WP","Pyrazosulfuron-ethyl","pyrazo","Herbicide / weedicide"],["Fenoxaprop-p-ethyl 9.3% EC","Fenoxaprop-p-ethyl","fenoxa","Herbicide / weedicide"],["Glufosinate ammonium 13.5% SL","Glufosinate ammonium","glufo","Herbicide / weedicide"],["Oxyfluorfen 23.5% EC","Oxyfluorfen","oxyflu","Herbicide / weedicide"],["Topramezone 33.6% SC","Topramezone","topra","Herbicide / weedicide"],["Ethion 50% EC","Ethion","ethi","Acaricide"],["Fenazaquin 10% EC","Fenazaquin","fenaza","Acaricide"]];
-let custom=[],hidden={};
-const slug=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,"-");
-const allNames=()=>DEFAULTS.filter(d=>!hidden[slug(d[0])]).map(d=>({t:d[0],c:d[1],a:d[2],k:d[3]})).concat(custom);
-function match(q){q=q.trim().toLowerCase();if(q.length<2)return[];return allNames().filter(n=>(n.t+" "+n.c+" "+(n.a||"")).toLowerCase().includes(q)).slice(0,6)}
-function suggest(inp,box,src,pick){
-  const show=()=>{const r=src(inp.value);box._r=r;box.innerHTML=r.map((x,i)=>`<button type="button" data-i="${i}">${x.label}</button>`).join("");box.classList.toggle("hide",!r.length)};
-  inp.addEventListener("input",show);inp.addEventListener("blur",()=>setTimeout(()=>box.classList.add("hide"),200));
-  box.addEventListener("mousedown",e=>e.preventDefault());
-  box.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;pick(box._r[b.dataset.i]);box.classList.add("hide")});
-}
-suggest($("common"),$("sgc"),q=>match(q).map(n=>({n,label:esc(n.c)+" · "+esc(n.t)})),r=>{$("common").value=r.n.c;$("tech").value=r.n.t;ftot()});
-suggest($("tech"),$("sgt"),q=>match(q).map(n=>({n,label:esc(n.t)+" · "+esc(n.k||"")})),r=>{$("tech").value=r.n.t;if(!$("common").value.trim())$("common").value=r.n.c});
-let clArm=false;
-$("clog").onclick=async()=>{const bt=$("clog");
-  if(!clArm){clArm=true;bt.textContent="Tap again to clear all history";setTimeout(()=>{clArm=false;bt.textContent="Clear activity history"},4000);return}
-  clArm=false;bt.textContent="Clear activity history";
-  try{const q=await getDocs(collection(db,"shops",me.shopId,"log"));let bt2=writeBatch(db),n=0;for(const d of q.docs){bt2.delete(d.ref);if(++n%400===0){await bt2.commit();bt2=writeBatch(db)}}await bt2.commit();$("sm").style.color="var(--green)";$("sm").textContent="Activity history cleared."}catch(x){alert("Couldn’t clear: "+x.message)}};
-const COMP=[{n:"Company",label:"Company"}];
-suggest($("sup"),$("sgs"),q=>{q=q.trim().toLowerCase();return(q===""||("company".startsWith(q)&&q!=="company"))?COMP:[]},r=>{$("sup").value=r.n});
-$("sup").addEventListener("focus",()=>{if(!$("sup").value.trim()){const bx=$("sgs");bx._r=COMP;bx.innerHTML='<button type="button" data-i="0">Company</button>';bx.classList.remove("hide")}});
-function renderNames(){
-  if(!me||me.role!=="owner")return;
-  $("nlist").innerHTML=DEFAULTS.map(d=>`<div class="u"><label style="margin:0;display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" data-h="${slug(d[0])}" ${hidden[slug(d[0])]?"":"checked"} style="width:22px;min-height:22px"><span>${esc(d[0])}<br><span class="sb">${esc(d[3])}</span></span></label></div>`).join("")+
-   custom.map(n=>`<div class="u"><span>${esc(n.t)}<br><span class="sb">Added by you · ${esc(n.k||"")}</span></span><button data-d="${n.id}" type="button">Remove</button></div>`).join("");
-}
-$("nf").onsubmit=async e=>{e.preventDefault();const t=$("nt").value.trim();
-  try{await setDoc(doc(db,"names",slug(t)),{t,c:$("nc").value.trim(),a:$("na").value.trim(),k:$("nk").value});$("nf").reset()}catch(x){alert("Couldn’t add: "+x.message)}};
-$("nlist").onchange=async e=>{const i=e.target.closest("input[data-h]");if(!i)return;
-  try{i.checked?await deleteDoc(doc(db,"namehide",i.dataset.h)):await setDoc(doc(db,"namehide",i.dataset.h),{hide:true})}catch(x){alert(x.message)}};
-$("nlist").onclick=async e=>{const b=e.target.closest("button[data-d]");if(!b)return;
-  try{await deleteDoc(doc(db,"names",b.dataset.d))}catch(x){alert(x.message)}};
+// Photo Upload Handler
+$("photoInput").onchange=e=>{
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=evt=>{
+    photoBase64=evt.target.result;
+    $("photoPreview").src=photoBase64;
+    $("photoPreview").style.display="block";
+  };
+  reader.readAsDataURL(file);
+};
 
-const FIELDS=["common","tech","brand","lot","sup","bought","exp","ps","packs","sell"];
-function openForm(it){editId=it?it.id:null;$("dt").textContent=it?"Edit stock":"Add stock";
-  FIELDS.concat("cost").forEach(k=>$(k).value="");if(it){FIELDS.forEach(k=>$(k).value=it[k]!=null?it[k]:"");$("cost").value=cost(it)}
-  $("pu").value=it?it.pu:"L";if(!it)$("bought").value=new Date().toISOString().slice(0,10);ftot();$("dlg").showModal()}
-$("add").onclick=()=>openForm(null);$("cx").onclick=()=>$("dlg").close();$("scx").onclick=()=>$("sdlg").close();
-$("frm").onsubmit=async()=>{
-  const o={};FIELDS.forEach(k=>o[k]=$(k).value.trim());["ps","packs","sell"].forEach(k=>o[k]=parseFloat(o[k])||0);o.pu=$("pu").value;
-  const sid=me.shopId,newCost=parseFloat($("cost").value)||0;
-  const same=editId?null:items.find(x=>x.lot.trim().toLowerCase()===o.lot.toLowerCase()&&x.common.trim().toLowerCase()===o.common.toLowerCase()&&x.ps===o.ps&&x.pu===o.pu);
-  if(same){try{const tp=same.packs+o.packs,c=tp?(same.packs*cost(same)+o.packs*newCost)/tp:newCost;
-    await updateDoc(doc(db,"shops",sid,"stock",same.id),{packs:Math.round(tp*1000)/1000,sell:o.sell,bought:o.bought});
-    await setDoc(doc(db,"shops",sid,"private",same.id),{cost:Math.round(c*100)/100});
-    addLog("added "+num(o.packs)+" packs to "+o.common+" (lot "+o.lot+")");flash("Added to existing lot")}catch(e){alert("Couldn’t save: "+e.message)}return}
-  const id=editId||nid();
-  try{await setDoc(doc(db,"shops",sid,"stock",id),o);await setDoc(doc(db,"shops",sid,"private",id),{cost:parseFloat($("cost").value)||0});addLog((editId?"edited ":"added ")+o.common+" (lot "+o.lot+")")}catch(e){alert("Couldn’t save: "+e.message)}};
-let sales=[],farmers={},rp="today";
-const dkey=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-const dt=t=>new Date(t).toLocaleString(undefined,{day:"numeric",month:"short",year:"numeric",hour:"numeric",minute:"2-digit"});
-function flash(t){$("okt").textContent=t;$("ok").classList.remove("hide");setTimeout(()=>$("ok").classList.add("hide"),1500)}
-function indexFarmers(){farmers={};sales.slice().sort((x,y)=>x.at-y.at).forEach(x=>{if(!x.farmer)return;const k=x.farmer.toLowerCase(),f=farmers[k]||(farmers[k]={name:x.farmer,phone:"",count:0,last:0});f.count++;f.last=x.at;f.name=x.farmer;if(x.phone)f.phone=x.phone})}
-const hint=()=>{const f=farmers[$("sfn").value.trim().toLowerCase()];$("sfh").textContent=f?`Bought before: ${f.count} time${f.count>1?"s":""}, last on ${new Date(f.last).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})}`:""};
-const stot=()=>{const it=items.find(x=>x.id===sellId);if(!it)return;const n=+$("sq").value||0,pr=+$("sp2").value||0;$("stot").textContent="Total "+money(n*pr)+" · Profit "+money(n*(pr-cost(it)))};
-["sq","sp2"].forEach(i=>$(i).addEventListener("input",stot));
-$("sfn").addEventListener("input",hint);
-suggest($("sfn"),$("sgf"),q=>{q=q.trim().toLowerCase();if(!q)return[];return Object.values(farmers).filter(f=>f.name.toLowerCase().includes(q)&&f.name.toLowerCase()!==q).slice(0,6).map(f=>({n:f,label:esc(f.name)+" · "+f.count+"×"}))},r=>{$("sfn").value=r.n.name;if(r.n.phone)$("sfp").value=r.n.phone;hint()});
-$("sfrm").onsubmit=async()=>{const it=items.find(x=>x.id===sellId);if(!it)return;
-  const n=+$("sq").value||0,now=Date.now();
-  const sale={at:now,day:dkey(new Date(now)),stockId:it.id,common:it.common,tech:it.tech||"",brand:it.brand||"",lot:it.lot,packs:n,ps:it.ps,pu:it.pu,price:+$("sp2").value||0,cost:cost(it),pay:$("spay").value,farmer:$("sfn").value.trim(),phone:$("sfp").value.trim(),by:me.username};
-  try{await updateDoc(doc(db,"shops",me.shopId,"stock",sellId),{packs:Math.max(0,Math.round((it.packs-n)*1000)/1000)});await setDoc(doc(db,"shops",me.shopId,"sales",nid()),sale);addLog("sold "+num(n)+" packs of "+it.common+" (lot "+it.lot+")");flash("Sale saved")}catch(e){alert("Couldn’t save sale: "+e.message)}};
-function range(){const t=new Date();t.setHours(0,0,0,0);let a=new Date(t),b=new Date(t);
-  if(rp==="week")a.setDate(a.getDate()-6);else if(rp==="month")a.setDate(1);
-  else if(rp==="custom"){if($("rf").value)a=new Date($("rf").value+"T00:00:00");if($("rt").value)b=new Date($("rt").value+"T00:00:00")}
-  return[dkey(a),dkey(b)]}
-let pf="all",cArm=null,dArm=null;
-function repRows(){const[a,b]=range(),fq=$("sfq").value.trim().toLowerCase(),iq=$("siq").value.trim().toLowerCase();
-  return sales.filter(x=>x.day>=a&&x.day<=b&&(pf==="all"||x.pay===pf)&&(!fq||(x.farmer||"").toLowerCase().includes(fq))&&(!iq||(x.common+" "+(x.tech||"")+" "+(x.brand||"")).toLowerCase().includes(iq))).sort((x,y)=>y.at-x.at)}
-function renderSales(){
-  const rows=repRows(),adm=me&&me.role==="admin";let tot=0,cash=0,cred=0,prof=0,live=0;
-  rows.forEach(x=>{if(x.cancelled)return;live++;const v=x.packs*x.price;tot+=v;x.pay==="credit"?cred+=v:cash+=v;prof+=x.packs*(x.price-x.cost)});
-  $("rsum").innerHTML=`<div class="s"><b>${money(tot)}</b><span>Sales (${live})</span></div><div class="s"><b>${money(prof)}</b><span>Profit</span></div><div class="s"><b>${money(cash)}</b><span>Cash</span></div><div class="s ${cred?"warn":""}"><b>${money(cred)}</b><span>Credit</span></div>`;
-  $("rlist").innerHTML=rows.length?rows.map(x=>`<div class="item ${x.cancelled?"exp":x.pay==="credit"?"soon":""}" data-sid="${x.id}"><div class="top"><div><div class="nm" ${x.cancelled?'style="text-decoration:line-through"':""}>${esc(x.common)}</div><div class="sb">Lot ${esc(x.lot)} · ${num(x.packs)} × ${num(x.ps)} ${esc(x.pu)}</div></div><span class="tag">${x.cancelled?"Cancelled":x.pay==="credit"?"Credit":"Cash"}</span></div><div class="g"><span>Amount <b>${money(x.packs*x.price)}</b></span><span>Price / pack <b>${money(x.price)}</b></span><span>Farmer <b>${esc(x.farmer||"–")}</b></span><span>Phone <b>${esc(x.phone||"–")}</b></span><span class="w">Time <b>${dt(x.at)}</b></span></div>${adm?`<div class="act">${x.cancelled?"":`<button data-a="cancel" type="button">${cArm===x.id?"Tap again to cancel":"Cancel sale"}</button>`}<button data-a="sdel" type="button">${dArm===x.id?"Tap again to delete":"Delete"}</button></div>`:""}</div>`).join(""):`<div class="empty">No sales match.</div>`;
+const FIELDS=["cat","common","tech","brand","lot","barcode","sup","bought","exp","ps","packs","sell"];
+function openForm(it){
+  editId=it?it.id:null;$("dt").textContent=it?"Edit stock":"Add stock";
+  FIELDS.concat("cost").forEach(k=>$(k).value="");
+  photoBase64=it&&it.photo?it.photo:"";
+  if(photoBase64){$("photoPreview").src=photoBase64;$("photoPreview").style.display="block"}
+  else{$("photoPreview").style.display="none"}
+  if(it){FIELDS.forEach(k=>$(k).value=it[k]!=null?it[k]:"");$("cost").value=cost(it)}
+  else{$("cat").value="Insecticide";$("pu").value="L";$("bought").value=new Date().toISOString().slice(0,10)}
+  ftot();$("dlg").showModal();
 }
-$("pf").onclick=e=>{const b=e.target.closest("button");if(!b)return;pf=b.dataset.f;document.querySelectorAll("#pf button").forEach(x=>x.classList.toggle("on",x===b));renderSales()};
-["sfq","siq"].forEach(i=>$(i).addEventListener("input",renderSales));
-$("rlist").onclick=async e=>{const b=e.target.closest("button");if(!b)return;const id=b.closest(".item").dataset.sid,x=sales.find(v=>v.id===id);if(!x)return;
-  if(b.dataset.a==="cancel"){if(cArm!==id){cArm=id;dArm=null;renderSales();return}cArm=null;
-    try{const it=items.find(i=>i.id===x.stockId);if(it)await updateDoc(doc(db,"shops",me.shopId,"stock",x.stockId),{packs:Math.round((it.packs+x.packs)*1000)/1000});
-      await updateDoc(doc(db,"shops",me.shopId,"sales",id),{cancelled:true,cancelledAt:Date.now(),cancelledBy:me.username});addLog("cancelled sale of "+x.common+" (lot "+x.lot+")");flash("Sale cancelled")}catch(err){alert("Couldn’t cancel: "+err.message)}}
-  else if(b.dataset.a==="sdel"){if(dArm!==id){dArm=id;cArm=null;renderSales();return}dArm=null;
-    try{await deleteDoc(doc(db,"shops",me.shopId,"sales",id));addLog("deleted a sale record of "+x.common+" (lot "+x.lot+")")}catch(err){alert("Couldn’t delete: "+err.message)}}};
-$("pt").onclick=e=>{const b=e.target.closest("button");if(!b)return;rp=b.dataset.p;document.querySelectorAll("#pt button").forEach(x=>x.classList.toggle("on",x===b));$("cr").classList.toggle("hide",rp!=="custom");if(rp==="custom"&&!$("rf").value){$("rf").value=$("rt").value=dkey(new Date())}renderSales()};
-["rf","rt"].forEach(i=>$(i).addEventListener("input",renderSales));
-$("rcopy").onclick=async()=>{const rows=repRows().filter(x=>!x.cancelled),[a,b]=range();let tot=0,cash=0,cred=0,prof=0;
-  rows.forEach(x=>{const v=x.packs*x.price;tot+=v;x.pay==="credit"?cred+=v:cash+=v;prof+=x.packs*(x.price-x.cost)});
-  const txt=`Sales report ${a} to ${b}\nTotal ${money(tot)} (Cash ${money(cash)}, Credit ${money(cred)})\nProfit ${money(prof)}\n\n`+rows.map(x=>`${dt(x.at)} · ${x.farmer||"-"} · ${x.common} lot ${x.lot} × ${num(x.packs)} · ${money(x.price)} · ${x.pay==="credit"?"Credit":"Cash"}`).join("\n");
-  try{await navigator.clipboard.writeText(txt);$("rmsg").style.color="var(--green)";$("rmsg").textContent="Report copied."}catch(e){$("rmsg").style.color="var(--red)";$("rmsg").textContent="Couldn’t copy on this device."}};
-function showView(v){["stock","sales","calc"].forEach(x=>$("v-"+x).classList.toggle("hide",x!==v));document.querySelectorAll("#vt button").forEach(x=>x.classList.toggle("on",x.dataset.v===v));$("add").classList.toggle("hide",v!=="stock"||!me||me.role==="owner");if(v==="sales")renderSales()}
-$("vt").onclick=e=>{const b=e.target.closest("button");if(b)showView(b.dataset.v)};
-let ce="",just=false;
-const KEYS=["C","⌫","%","÷","7","8","9","×","4","5","6","−","1","2","3","+","00","0",".","="];
-$("keys").innerHTML=KEYS.map(k=>`<button type="button" data-k="${k}" class="${"÷×−+%".includes(k)?"op":k==="="?"eq":""}">${k}</button>`).join("");
-function evalExpr(x){const q=x.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-").replace(/%/g,"/100");if(!/^[0-9+\-*/.() ]+$/.test(q))return null;try{const v=Function("return ("+q+")")();return isFinite(v)?Math.round(v*1e10)/1e10:null}catch(e){return null}}
-$("keys").onclick=e=>{const b=e.target.closest("button");if(!b)return;const k=b.dataset.k;
-  if(k==="C"){ce="";just=false}else if(k==="⌫"){ce=ce.slice(0,-1)}
-  else if(k==="="){const v=evalExpr(ce);if(v===null){$("cd").value="Error";ce="";return}ce=String(v);just=true}
-  else{if(just&&/[0-9.]/.test(k))ce="";just=false;ce+=k}
-  $("cd").value=ce||"0"};
-function bcalc(){
-  const ps=+$("bs").value||0,c=+$("bc").value||0,pr=+$("bp").value||0,n=+$("bn").value||0,t=$("bt").value===""?null:+$("bt").value,u=$("bu").value,q=ps*F[u],bu=base(u);
-  if(!c&&!pr){$("bout").textContent="Enter the numbers to see the result.";return}
-  const m=pr-c;let h=`Profit per pack: <b>${money(m)}</b><br>Profit on cost: <b>${c?num(m/c*100):"–"}%</b><br>Profit on selling price: <b>${pr?num(m/pr*100):"–"}%</b>`;
-  if(q)h+=`<br>Cost per ${bu}: <b>${money(c/q)}</b><br>Selling per ${bu}: <b>${money(pr/q)}</b>`;
-  if(n)h+=`<br>Total cost: <b>${money(n*c)}</b><br>Total selling: <b>${money(n*pr)}</b><br>Total profit: <b>${money(n*m)}</b>`;
-  if(t!==null&&c)h+=`<br>Price for ${num(t)}% profit on cost: <b>${money(c*(1+t/100))}</b>`;
-  $("bout").innerHTML=h}
-["bs","bu","bc","bp","bn","bt"].forEach(i=>$(i).addEventListener("input",bcalc));
+$("add").onclick=()=>openForm(null);$("cx").onclick=()=>$("dlg").close();$("scx").onclick=()=>$("sdlg").close();
+
+$("frm").onsubmit=async()=>{
+  const o={};FIELDS.forEach(k=>o[k]=$(k).value.trim());["ps","packs","sell"].forEach(k=>o[k]=parseFloat(o[k])||0);
+  o.pu=$("pu").value;o.photo=photoBase64;
+  const id=editId||nid(),sid=me.shopId;
+  try{await setDoc(doc(db,"shops",sid,"stock",id),o);await setDoc(doc(db,"shops",sid,"private",id),{cost:parseFloat($("cost").value)||0});addLog((editId?"edited ":"added ")+o.common+" (lot "+o.lot+")")}catch(e){alert("Couldn’t save: "+e.message)}
+};
+
+// Sell Form Total & Submit
+const updateStot=()=>{
+  const it=items.find(x=>x.id===sellId);if(!it)return;
+  const q=+$("sq").value||0;
+  $("stot").textContent=`Total Bill: ${money(q*it.sell)} (${$("paymode").value})`;
+};
+$("sq").oninput=updateStot;
+$("paymode").onchange=updateStot;
+
+$("sfrm").onsubmit=async()=>{
+  const it=items.find(x=>x.id===sellId);if(!it)return;
+  const n=+$("sq").value||0,mode=$("paymode").value,cname=$("cname").value.trim(),cphone=$("cphone").value.trim();
+  try{
+    await updateDoc(doc(db,"shops",me.shopId,"stock",sellId),{packs:Math.max(0,Math.round((it.packs-n)*1000)/1000)});
+    const logTxt=`sold ${num(n)} packs of ${it.common} (lot ${it.lot}) - ${mode}${cname?' to '+cname:''}`;
+    addLog(logTxt);
+    
+    // Trigger WhatsApp Receipt Option
+    if(cphone){
+      const billMsg=`*SHOP RECEIPT*\nItem: ${it.common}\nLot: ${it.lot}\nPacks: ${n}\nTotal: ${money(n*it.sell)}\nPayment: ${mode}\nThank you!`;
+      window.open(`https://wa.me/91${cphone.replace(/\D/g,'')}?text=${encodeURIComponent(billMsg)}`,'_blank');
+    }
+  }catch(e){alert("Couldn’t update sale: "+e.message)}
+};
+
 $("list").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
   const id=b.closest(".item").dataset.id,it=items.find(x=>x.id===id);
   if(b.dataset.a==="edit")openForm(it);
-  else if(b.dataset.a==="sell"){sellId=id;$("st").textContent=`Sell: ${it.common} (Lot ${it.lot})`;$("sq").value="";$("sq").max=it.packs;$("sp2").value=it.sell;$("sfn").value="";$("sfp").value="";$("spay").value="cash";$("sfh").textContent="";stot();$("sdlg").showModal()}
-  else if(b.dataset.a==="del"){if(delArm===id){delArm=null;try{await deleteDoc(doc(db,"shops",me.shopId,"stock",id));await deleteDoc(doc(db,"shops",me.shopId,"private",id));addLog("deleted "+it.common+" (lot "+it.lot+")")}catch(x){alert("Couldn’t delete: "+x.message)}}else{delArm=id;render()}}};
+  else if(b.dataset.a==="sell"){
+    sellId=id;$("st").textContent=`Sell: ${it.common} (Lot ${it.lot})`;
+    $("sq").value="";$("sq").max=it.packs;$("cname").value="";$("cphone").value="";
+    updateStot();$("sdlg").showModal();
+  }
+  else if(b.dataset.a==="del"){if(delArm===id){delArm=null;try{await deleteDoc(doc(db,"shops",me.shopId,"stock",id));await deleteDoc(doc(db,"shops",me.shopId,"private",id));addLog("deleted "+it.common+" (lot "+it.lot+")")}catch(x){alert("Couldn’t delete: "+x.message)}}else{delArm=id;render()}}
+};
+
 $("q").oninput=render;$("f").onchange=render;
+
+// Barcode Scanner Handler using Native BarcodeDetector API
+let scanTargetInput=null,streamTrack=null;
+async function startScan(targetInput){
+  scanTargetInput=targetInput;
+  if(!('BarcodeDetector' in window)){
+    const code=prompt("Enter scanned barcode number manually:");
+    if(code && scanTargetInput){scanTargetInput.value=code;if(scanTargetInput===$("q"))render()}
+    return;
+  }
+  $("scandlg").showModal();
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
+    $("scanVideo").srcObject=stream;streamTrack=stream.getVideoTracks()[0];
+    const detector=new BarcodeDetector({formats:['code_128','ean_13','ean_8','qr_code','upc_a','data_matrix']});
+    const interval=setInterval(async()=>{
+      try{
+        const barcodes=await detector.detect($("scanVideo"));
+        if(barcodes.length>0){
+          clearInterval(interval);
+          const found=barcodes[0].rawValue;
+          if(scanTargetInput){scanTargetInput.value=found;if(scanTargetInput===$("q"))render()}
+          stopScan();
+        }
+      }catch(err){}
+    },500);
+  }catch(e){
+    alert("Camera access failed: "+e.message);stopScan();
+  }
+}
+function stopScan(){
+  if(streamTrack){streamTrack.stop();streamTrack=null}
+  try{$("scandlg").close()}catch(e){}
+}
+$("scanBtn").onclick=()=>startScan($("q"));
+$("formScanBtn").onclick=()=>startScan($("barcode"));
+$("closeScan").onclick=stopScan;
 
 $("t1").onclick=()=>{$("lf").classList.remove("hide");$("sg").classList.add("hide");$("t1").classList.add("on");$("t2").classList.remove("on");$("am").textContent=""};
 $("t2").onclick=()=>{$("sg").classList.remove("hide");$("lf").classList.add("hide");$("t2").classList.add("on");$("t1").classList.remove("on");$("am").textContent=""};
@@ -403,7 +463,10 @@ $("sg").onsubmit=async e=>{e.preventDefault();$("am").textContent="";signingUp=t
 $("out").onclick=()=>signOut(auth);
 $("sf").onsubmit=async e=>{e.preventDefault();const u=$("su").value.trim().toLowerCase();$("sm").textContent="";
   try{
-    if(!secAuth)secAuth=getAuth(initializeApp(firebaseConfig,"secondary"));
+    if(!secAuth){
+      const apps=window.firebaseApps||[];
+      secAuth=getAuth(apps.find(a=>a.name==="secondary")||initializeApp(firebaseConfig,"secondary"));
+    }
     const c=await createUserWithEmailAndPassword(secAuth,mail(u),$("sp").value);await signOut(secAuth);
     await setDoc(doc(db,"users",c.user.uid),{username:u,role:$("sr").value,shopId:me.shopId,active:true});
     $("sf").reset();$("sm").style.color="var(--green)";$("sm").textContent="Login created for "+u+".";
@@ -413,22 +476,17 @@ $("ulist").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
 
 async function boot(u){
   unsubs.forEach(f=>f());unsubs=[];me=null;items=[];costs={};shops={};ostock={};subbed={};
-  if(!u){document.body.classList.add("out");$("lf").reset();$("in").classList.add("hide");$("auth").classList.remove("hide");$("add").classList.add("hide");return}
-  let p=null;try{const s=await getDoc(doc(db,"users",u.uid));p=s.exists()?s.data():null}catch(e){}
+  if(!u){$("in").classList.add("hide");$("auth").classList.remove("hide");$("add").classList.add("hide");return}
+  let p=null;try{const s=await getDoc(doc(doc(db,"users",u.uid)));p=s.exists()?s.data():null}catch(e){}
   if(!p||!p.active){await signOut(auth);$("am").textContent="This login is disabled or not set up. Ask your shop admin.";return}
-  me={...p,uid:u.uid};document.body.classList.remove("out");$("auth").classList.add("hide");$("in").classList.remove("hide");
+  me={...p,uid:u.uid};$("auth").classList.add("hide");$("in").classList.remove("hide");
   $("who").textContent=`Logged in as ${p.username} (${p.role==="owner"?"app owner":p.role})`;
-  unsubs.push(onSnapshot(collection(db,"names"),s=>{custom=s.docs.map(d=>({...d.data(),id:d.id}));renderNames()}));
-  unsubs.push(onSnapshot(collection(db,"namehide"),s=>{hidden={};s.docs.forEach(d=>hidden[d.id]=1);renderNames()}));
-  document.body.classList.add("anim");setTimeout(()=>document.body.classList.remove("anim"),1200);
   if(p.role==="owner"){$("app").classList.add("hide");$("add").classList.add("hide");$("owner").classList.remove("hide");startOwner();return}
   $("owner").classList.add("hide");$("app").classList.remove("hide");$("add").classList.remove("hide");
   const sid=p.shopId,adm=p.role==="admin";$("staff").classList.toggle("hide",!adm);
   try{const s=await getDoc(doc(db,"shops",sid));if(s.exists())$("who").textContent+=" · "+s.data().name}catch(e){}
   unsubs.push(onSnapshot(collection(db,"shops",sid,"stock"),s=>{items=s.docs.map(d=>({...d.data(),id:d.id}));render()},e=>alert("Cloud error: "+e.message)));
   unsubs.push(onSnapshot(collection(db,"shops",sid,"private"),s=>{costs={};s.docs.forEach(d=>costs[d.id]=d.data().cost||0);render()}));
-  unsubs.push(onSnapshot(query(collection(db,"shops",sid,"sales"),orderBy("at","desc"),limit(1000)),s=>{sales=s.docs.map(d=>({...d.data(),id:d.id}));indexFarmers();renderSales()}));
-  showView("stock");
   if(adm){
     unsubs.push(onSnapshot(query(collection(db,"users"),where("shopId","==",sid)),s=>{users=s.docs.map(d=>({...d.data(),id:d.id}));renderUsers()}));
     unsubs.push(onSnapshot(query(collection(db,"shops",sid,"log"),orderBy("at","desc"),limit(30)),s=>{$("log").innerHTML=s.docs.length?s.docs.map(d=>{const l=d.data();return`<div class="u"><span>${esc(l.by)} ${esc(l.text)}</span><span style="color:var(--muted);font-size:13px">${new Date(l.at).toLocaleString(undefined,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"})}</span></div>`}).join(""):"No activity yet."}));
