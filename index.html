@@ -71,11 +71,34 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1}.tabs .on{background:var(--green);color:var(--on);border-color:var(--green)}
 .chk{display:flex;gap:8px;align-items:flex-start;color:var(--ink)}.chk input{width:22px;min-height:22px;margin-top:2px}
 .lim{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.lim input{width:90px;min-height:36px;padding:4px 8px}
+body{background:radial-gradient(900px 420px at 50% -140px,var(--okbg),transparent),var(--bg)}
+html{scroll-behavior:smooth}
+.brand{display:flex;align-items:center;gap:10px;margin:4px 0 10px}.brand h1{margin:0}
+.brandlogo{width:40px;height:40px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.22));animation:pop .6s ease both}
+body.out main{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-bottom:30px}
+body.out .brand{flex-direction:column;gap:6px;margin-bottom:16px}
+body.out .brandlogo{width:68px;height:68px}
+body.out #auth{margin-top:0;width:100%;max-width:400px;margin-left:auto;margin-right:auto;box-shadow:0 12px 32px rgba(0,0,0,.14)}
+.item{box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .2s ease,box-shadow .2s ease}
+.item:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.s{box-shadow:0 2px 8px rgba(0,0,0,.05);border-top:3px solid var(--green);transition:transform .2s ease}
+.s.warn{border-top-color:var(--amber)}.s.bad{border-top-color:var(--red)}.s:hover{transform:translateY(-2px)}
+.tabs button{transition:background .25s ease,color .25s ease,transform .12s ease}
+.soon .tag{animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.6}}
+@keyframes rise{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+#auth{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+dialog::backdrop{animation:fadein .25s ease both}
+.empty::before{content:"🌱";display:block;font-size:38px;margin-bottom:6px;animation:pop .6s ease both}
+.sg{animation:up .2s ease both}
+button.pri{background-image:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0))}
+input,select{transition:border-color .2s ease,box-shadow .2s ease}
+input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(43,122,56,.2)}
 </style>
 </head>
-<body>
+<body class="out">
 <main>
-  <h1>Shop stock</h1>
+  <div class="brand"><svg class="brandlogo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lgx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#48b05b"/><stop offset="1" stop-color="#1d6a2d"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lgx)"/><path d="M17 45C17 29 27 19 47 17c0 17-10 28-24 28-2 0-4-.3-6-.9z" fill="#fff"/><path d="M19 46c6-10 14-17 24-22" stroke="#2b7a38" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg><h1>Shop stock</h1></div>
   <div id="auth" class="box">
     <div class="tabs"><button id="t1" class="on" type="button">Log in</button><button id="t2" type="button">New shop</button></div>
     <form id="lf">
@@ -113,12 +136,15 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
         </form>
         <div id="ulist" style="margin-top:10px"></div>
         <b style="display:block;margin-top:14px">Recent activity</b><div id="log">No activity yet.</div>
+        <button id="clog" type="button" style="margin-top:8px">Clear activity history</button>
         <div class="msg" id="sm" role="status"></div>
       </div>
       </div>
       <div id="v-sales" class="hide">
         <div class="tabs" id="pt"><button type="button" data-p="today" class="on">Today</button><button type="button" data-p="week">Week</button><button type="button" data-p="month">Month</button><button type="button" data-p="custom">Custom</button></div>
         <div class="r2 hide" id="cr"><label>From<input id="rf" type="date"></label><label>To<input id="rt" type="date"></label></div>
+        <div class="tabs" id="pf"><button type="button" data-f="all" class="on">All</button><button type="button" data-f="cash">Cash</button><button type="button" data-f="credit">Credit</button></div>
+        <div class="r2" style="margin-bottom:10px"><input id="sfq" type="search" placeholder="Search farmer name" aria-label="Search by farmer name"><input id="siq" type="search" placeholder="Search item name" aria-label="Search by item name"></div>
         <div class="sum" id="rsum"></div>
         <div id="rlist"></div>
         <div class="act" style="margin-top:8px"><button id="rcopy" type="button" class="pri">Copy report</button></div>
@@ -195,7 +221,7 @@ label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}label in
 import {firebaseConfig} from "./firebase-config.js";
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged,createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,doc,getDoc,setDoc,updateDoc,deleteDoc,onSnapshot,addDoc,query,orderBy,limit,where} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,collection,doc,getDoc,setDoc,updateDoc,deleteDoc,onSnapshot,addDoc,query,orderBy,limit,where,getDocs,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const $=i=>document.getElementById(i);
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const mail=u=>u.trim().toLowerCase().replace(/[^a-z0-9._-]/g,"")+"@shopstock.app";
@@ -247,7 +273,7 @@ function startOwner(){
 const ftot=()=>{$("ftot").textContent="Total quantity: "+num((+$("ps").value||0)*(+$("packs").value||0)*F[$("pu").value])+" "+base($("pu").value)};
 ["ps","packs","pu"].forEach(i=>$(i).addEventListener("input",ftot));
 
-const DEFAULTS=[["Chlorpyrifos 50% EC","Chlorpyrifos","chloro,chlorpyriphos,chloropyriphos","Insecticide"],["Imidacloprid 17.8% SL","Imidacloprid","imida","Insecticide"],["Thiamethoxam 25% WG","Thiamethoxam","thia,thiamethox","Insecticide"],["Acephate 75% SP","Acephate","","Insecticide"],["Cypermethrin 10% EC","Cypermethrin","cyper","Insecticide"],["Lambda-cyhalothrin 5% EC","Lambda-cyhalothrin","lambda,lamda","Insecticide"],["Emamectin benzoate 5% SG","Emamectin benzoate","emamectin","Insecticide"],["Fipronil 5% SC","Fipronil","","Insecticide"],["Profenofos 50% EC","Profenofos","profe","Insecticide"],["Quinalphos 25% EC","Quinalphos","quinal","Insecticide"],["Dimethoate 30% EC","Dimethoate","dimetho","Insecticide"],["Acetamiprid 20% SP","Acetamiprid","aceta","Insecticide"],["Chlorantraniliprole 18.5% SC","Chlorantraniliprole","chlorantra","Insecticide"],["Spinosad 45% SC","Spinosad","","Insecticide"],["Buprofezin 25% SC","Buprofezin","","Insecticide"],["Mancozeb 75% WP","Mancozeb","manco","Fungicide"],["Carbendazim 50% WP","Carbendazim","carben","Fungicide"],["Copper oxychloride 50% WP","Copper oxychloride","coc,copper","Fungicide"],["Hexaconazole 5% EC","Hexaconazole","hexa","Fungicide"],["Propiconazole 25% EC","Propiconazole","propi","Fungicide"],["Azoxystrobin 23% SC","Azoxystrobin","azoxy","Fungicide"],["Tebuconazole 25.9% EC","Tebuconazole","tebu","Fungicide"],["Metalaxyl 8% + Mancozeb 64% WP","Metalaxyl + Mancozeb","metalaxyl","Fungicide"],["Thiophanate methyl 70% WP","Thiophanate methyl","thiophanate","Fungicide"],["Difenoconazole 25% EC","Difenoconazole","difeno","Fungicide"],["Glyphosate 41% SL","Glyphosate","glypho","Herbicide / weedicide"],["Atrazine 50% WP","Atrazine","atra","Herbicide / weedicide"],["Pendimethalin 30% EC","Pendimethalin","pendi","Herbicide / weedicide"],["2,4-D sodium salt 80% WP","2,4-D","24d","Herbicide / weedicide"],["Butachlor 50% EC","Butachlor","buta","Herbicide / weedicide"],["Pretilachlor 50% EC","Pretilachlor","preti","Herbicide / weedicide"],["Quizalofop-ethyl 5% EC","Quizalofop-ethyl","quizalo","Herbicide / weedicide"],["Propargite 57% EC","Propargite","propar","Acaricide"],["Spiromesifen 22.9% SC","Spiromesifen","spiro","Acaricide"],["Fenpyroximate 5% EC","Fenpyroximate","fenpy","Acaricide"],["Abamectin 1.9% EC","Abamectin","abam","Acaricide"],["Hexythiazox 5.45% EC","Hexythiazox","hexythi","Acaricide"],["Tembotrione 42% SC","Tembotrione","tembo","Herbicide / weedicide"],["Tricyclazole 75% WP","Tricyclazole","tricy,tricyclo","Fungicide"],["Isoprothiolane 40% EC","Isoprothiolane","isopro,isoprothio","Fungicide"],["Validamycin 3% L","Validamycin","valida","Fungicide"],["Chlorothalonil 75% WP","Chlorothalonil","chlorotha","Fungicide"],["Cartap hydrochloride 50% SP","Cartap hydrochloride","cartap","Insecticide"],["Pymetrozine 50% WG","Pymetrozine","pymet","Insecticide"],["Flonicamid 50% WG","Flonicamid","floni","Insecticide"],["Diafenthiuron 50% WP","Diafenthiuron","diafen","Insecticide"],["Indoxacarb 14.5% SC","Indoxacarb","indox","Insecticide"],["Bispyribac-sodium 10% SC","Bispyribac-sodium","bispy,bispyribac","Herbicide / weedicide"]];
+const DEFAULTS=[["Chlorpyrifos 50% EC","Chlorpyrifos","chloro,chlorpyriphos,chloropyriphos","Insecticide"],["Imidacloprid 17.8% SL","Imidacloprid","imida","Insecticide"],["Thiamethoxam 25% WG","Thiamethoxam","thia,thiamethox","Insecticide"],["Acephate 75% SP","Acephate","","Insecticide"],["Cypermethrin 10% EC","Cypermethrin","cyper","Insecticide"],["Lambda-cyhalothrin 5% EC","Lambda-cyhalothrin","lambda,lamda","Insecticide"],["Emamectin benzoate 5% SG","Emamectin benzoate","emamectin","Insecticide"],["Fipronil 5% SC","Fipronil","","Insecticide"],["Profenofos 50% EC","Profenofos","profe","Insecticide"],["Quinalphos 25% EC","Quinalphos","quinal","Insecticide"],["Dimethoate 30% EC","Dimethoate","dimetho","Insecticide"],["Acetamiprid 20% SP","Acetamiprid","aceta","Insecticide"],["Chlorantraniliprole 18.5% SC","Chlorantraniliprole","chlorantra","Insecticide"],["Spinosad 45% SC","Spinosad","","Insecticide"],["Buprofezin 25% SC","Buprofezin","","Insecticide"],["Mancozeb 75% WP","Mancozeb","manco","Fungicide"],["Carbendazim 50% WP","Carbendazim","carben","Fungicide"],["Copper oxychloride 50% WP","Copper oxychloride","coc,copper","Fungicide"],["Hexaconazole 5% EC","Hexaconazole","hexa","Fungicide"],["Propiconazole 25% EC","Propiconazole","propi","Fungicide"],["Azoxystrobin 23% SC","Azoxystrobin","azoxy","Fungicide"],["Tebuconazole 25.9% EC","Tebuconazole","tebu","Fungicide"],["Metalaxyl 8% + Mancozeb 64% WP","Metalaxyl + Mancozeb","metalaxyl","Fungicide"],["Thiophanate methyl 70% WP","Thiophanate methyl","thiophanate","Fungicide"],["Difenoconazole 25% EC","Difenoconazole","difeno","Fungicide"],["Glyphosate 41% SL","Glyphosate","glypho","Herbicide / weedicide"],["Atrazine 50% WP","Atrazine","atra","Herbicide / weedicide"],["Pendimethalin 30% EC","Pendimethalin","pendi","Herbicide / weedicide"],["2,4-D sodium salt 80% WP","2,4-D","24d","Herbicide / weedicide"],["Butachlor 50% EC","Butachlor","buta","Herbicide / weedicide"],["Pretilachlor 50% EC","Pretilachlor","preti","Herbicide / weedicide"],["Quizalofop-ethyl 5% EC","Quizalofop-ethyl","quizalo","Herbicide / weedicide"],["Propargite 57% EC","Propargite","propar","Acaricide"],["Spiromesifen 22.9% SC","Spiromesifen","spiro","Acaricide"],["Fenpyroximate 5% EC","Fenpyroximate","fenpy","Acaricide"],["Abamectin 1.9% EC","Abamectin","abam","Acaricide"],["Hexythiazox 5.45% EC","Hexythiazox","hexythi","Acaricide"],["Tembotrione 42% SC","Tembotrione","tembo","Herbicide / weedicide"],["Tricyclazole 75% WP","Tricyclazole","tricy,tricyclo","Fungicide"],["Isoprothiolane 40% EC","Isoprothiolane","isopro,isoprothio","Fungicide"],["Validamycin 3% L","Validamycin","valida","Fungicide"],["Chlorothalonil 75% WP","Chlorothalonil","chlorotha","Fungicide"],["Cartap hydrochloride 50% SP","Cartap hydrochloride","cartap","Insecticide"],["Pymetrozine 50% WG","Pymetrozine","pymet","Insecticide"],["Flonicamid 50% WG","Flonicamid","floni","Insecticide"],["Diafenthiuron 50% WP","Diafenthiuron","diafen","Insecticide"],["Indoxacarb 14.5% SC","Indoxacarb","indox","Insecticide"],["Bispyribac-sodium 10% SC","Bispyribac-sodium","bispy,bispyribac","Herbicide / weedicide"],["Bifenthrin 10% EC","Bifenthrin","bifen","Insecticide"],["Thiacloprid 21.7% SC","Thiacloprid","thiaclo","Insecticide"],["Novaluron 10% EC","Novaluron","novalu","Insecticide"],["Lufenuron 5.4% EC","Lufenuron","lufen","Insecticide"],["Spinetoram 11.7% SC","Spinetoram","spineto","Insecticide"],["Dinotefuran 20% SG","Dinotefuran","dinote","Insecticide"],["Pyriproxyfen 10% EC","Pyriproxyfen","pyripro","Insecticide"],["Triflumezopyrim 10% SC","Triflumezopyrim","triflu","Insecticide"],["Spirotetramat 15.31% OD","Spirotetramat","spirotet","Insecticide"],["Propineb 70% WP","Propineb","propin","Fungicide"],["Cymoxanil 8% + Mancozeb 64% WP","Cymoxanil + Mancozeb","cymoxanil","Fungicide"],["Kasugamycin 3% SL","Kasugamycin","kasuga","Fungicide"],["Streptomycin sulphate 9% + Tetracycline 1% SP","Streptomycin + Tetracycline","streptocycline,strepto","Fungicide"],["Trifloxystrobin 25% + Tebuconazole 50% WG","Trifloxystrobin + Tebuconazole","triflox","Fungicide"],["Pyraclostrobin 20% WG","Pyraclostrobin","pyraclo","Fungicide"],["Carbendazim 12% + Mancozeb 63% WP","Carbendazim + Mancozeb","carbmanco","Fungicide"],["Sulphur 80% WP","Sulphur","sulfur,gandhak","Fungicide"],["Copper hydroxide 77% WP","Copper hydroxide","cuoh","Fungicide"],["Imazethapyr 10% SL","Imazethapyr","imazeth","Herbicide / weedicide"],["Pyrazosulfuron-ethyl 10% WP","Pyrazosulfuron-ethyl","pyrazo","Herbicide / weedicide"],["Fenoxaprop-p-ethyl 9.3% EC","Fenoxaprop-p-ethyl","fenoxa","Herbicide / weedicide"],["Glufosinate ammonium 13.5% SL","Glufosinate ammonium","glufo","Herbicide / weedicide"],["Oxyfluorfen 23.5% EC","Oxyfluorfen","oxyflu","Herbicide / weedicide"],["Topramezone 33.6% SC","Topramezone","topra","Herbicide / weedicide"],["Ethion 50% EC","Ethion","ethi","Acaricide"],["Fenazaquin 10% EC","Fenazaquin","fenaza","Acaricide"]];
 let custom=[],hidden={};
 const slug=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,"-");
 const allNames=()=>DEFAULTS.filter(d=>!hidden[slug(d[0])]).map(d=>({t:d[0],c:d[1],a:d[2],k:d[3]})).concat(custom);
@@ -260,7 +286,14 @@ function suggest(inp,box,src,pick){
 }
 suggest($("common"),$("sgc"),q=>match(q).map(n=>({n,label:esc(n.c)+" · "+esc(n.t)})),r=>{$("common").value=r.n.c;$("tech").value=r.n.t;ftot()});
 suggest($("tech"),$("sgt"),q=>match(q).map(n=>({n,label:esc(n.t)+" · "+esc(n.k||"")})),r=>{$("tech").value=r.n.t;if(!$("common").value.trim())$("common").value=r.n.c});
-suggest($("sup"),$("sgs"),q=>{q=q.trim().toLowerCase();return[...new Set(items.map(i=>i.sup).filter(Boolean))].filter(x=>x.toLowerCase().includes(q)&&x.toLowerCase()!==q).slice(0,6).map(x=>({n:x,label:esc(x)}))},r=>{$("sup").value=r.n});
+let clArm=false;
+$("clog").onclick=async()=>{const bt=$("clog");
+  if(!clArm){clArm=true;bt.textContent="Tap again to clear all history";setTimeout(()=>{clArm=false;bt.textContent="Clear activity history"},4000);return}
+  clArm=false;bt.textContent="Clear activity history";
+  try{const q=await getDocs(collection(db,"shops",me.shopId,"log"));let bt2=writeBatch(db),n=0;for(const d of q.docs){bt2.delete(d.ref);if(++n%400===0){await bt2.commit();bt2=writeBatch(db)}}await bt2.commit();$("sm").style.color="var(--green)";$("sm").textContent="Activity history cleared."}catch(x){alert("Couldn’t clear: "+x.message)}};
+const COMP=[{n:"Company",label:"Company"}];
+suggest($("sup"),$("sgs"),q=>{q=q.trim().toLowerCase();return(q===""||("company".startsWith(q)&&q!=="company"))?COMP:[]},r=>{$("sup").value=r.n});
+$("sup").addEventListener("focus",()=>{if(!$("sup").value.trim()){const bx=$("sgs");bx._r=COMP;bx.innerHTML='<button type="button" data-i="0">Company</button>';bx.classList.remove("hide")}});
 function renderNames(){
   if(!me||me.role!=="owner")return;
   $("nlist").innerHTML=DEFAULTS.map(d=>`<div class="u"><label style="margin:0;display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" data-h="${slug(d[0])}" ${hidden[slug(d[0])]?"":"checked"} style="width:22px;min-height:22px"><span>${esc(d[0])}<br><span class="sb">${esc(d[3])}</span></span></label></div>`).join("")+
@@ -280,7 +313,13 @@ function openForm(it){editId=it?it.id:null;$("dt").textContent=it?"Edit stock":"
 $("add").onclick=()=>openForm(null);$("cx").onclick=()=>$("dlg").close();$("scx").onclick=()=>$("sdlg").close();
 $("frm").onsubmit=async()=>{
   const o={};FIELDS.forEach(k=>o[k]=$(k).value.trim());["ps","packs","sell"].forEach(k=>o[k]=parseFloat(o[k])||0);o.pu=$("pu").value;
-  const id=editId||nid(),sid=me.shopId;
+  const sid=me.shopId,newCost=parseFloat($("cost").value)||0;
+  const same=editId?null:items.find(x=>x.lot.trim().toLowerCase()===o.lot.toLowerCase()&&x.common.trim().toLowerCase()===o.common.toLowerCase()&&x.ps===o.ps&&x.pu===o.pu);
+  if(same){try{const tp=same.packs+o.packs,c=tp?(same.packs*cost(same)+o.packs*newCost)/tp:newCost;
+    await updateDoc(doc(db,"shops",sid,"stock",same.id),{packs:Math.round(tp*1000)/1000,sell:o.sell,bought:o.bought});
+    await setDoc(doc(db,"shops",sid,"private",same.id),{cost:Math.round(c*100)/100});
+    addLog("added "+num(o.packs)+" packs to "+o.common+" (lot "+o.lot+")");flash("Added to existing lot")}catch(e){alert("Couldn’t save: "+e.message)}return}
+  const id=editId||nid();
   try{await setDoc(doc(db,"shops",sid,"stock",id),o);await setDoc(doc(db,"shops",sid,"private",id),{cost:parseFloat($("cost").value)||0});addLog((editId?"edited ":"added ")+o.common+" (lot "+o.lot+")")}catch(e){alert("Couldn’t save: "+e.message)}};
 let sales=[],farmers={},rp="today";
 const dkey=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
@@ -300,16 +339,26 @@ function range(){const t=new Date();t.setHours(0,0,0,0);let a=new Date(t),b=new 
   if(rp==="week")a.setDate(a.getDate()-6);else if(rp==="month")a.setDate(1);
   else if(rp==="custom"){if($("rf").value)a=new Date($("rf").value+"T00:00:00");if($("rt").value)b=new Date($("rt").value+"T00:00:00")}
   return[dkey(a),dkey(b)]}
-function repRows(){const[a,b]=range();return sales.filter(x=>x.day>=a&&x.day<=b).sort((x,y)=>y.at-x.at)}
+let pf="all",cArm=null,dArm=null;
+function repRows(){const[a,b]=range(),fq=$("sfq").value.trim().toLowerCase(),iq=$("siq").value.trim().toLowerCase();
+  return sales.filter(x=>x.day>=a&&x.day<=b&&(pf==="all"||x.pay===pf)&&(!fq||(x.farmer||"").toLowerCase().includes(fq))&&(!iq||(x.common+" "+(x.tech||"")+" "+(x.brand||"")).toLowerCase().includes(iq))).sort((x,y)=>y.at-x.at)}
 function renderSales(){
-  const rows=repRows();let tot=0,cash=0,cred=0,prof=0;
-  rows.forEach(x=>{const v=x.packs*x.price;tot+=v;x.pay==="credit"?cred+=v:cash+=v;prof+=x.packs*(x.price-x.cost)});
-  $("rsum").innerHTML=`<div class="s"><b>${money(tot)}</b><span>Sales (${rows.length})</span></div><div class="s"><b>${money(prof)}</b><span>Profit</span></div><div class="s"><b>${money(cash)}</b><span>Cash</span></div><div class="s ${cred?"warn":""}"><b>${money(cred)}</b><span>Credit</span></div>`;
-  $("rlist").innerHTML=rows.length?rows.map(x=>`<div class="item ${x.pay==="credit"?"soon":""}"><div class="top"><div><div class="nm">${esc(x.common)}</div><div class="sb">Lot ${esc(x.lot)} · ${num(x.packs)} × ${num(x.ps)} ${esc(x.pu)}</div></div><span class="tag">${x.pay==="credit"?"Credit":"Cash"}</span></div><div class="g"><span>Amount <b>${money(x.packs*x.price)}</b></span><span>Price / pack <b>${money(x.price)}</b></span><span>Farmer <b>${esc(x.farmer||"–")}</b></span><span>Phone <b>${esc(x.phone||"–")}</b></span><span class="w">Time <b>${dt(x.at)}</b></span></div></div>`).join(""):`<div class="empty">No sales in this period.</div>`;
+  const rows=repRows(),adm=me&&me.role==="admin";let tot=0,cash=0,cred=0,prof=0,live=0;
+  rows.forEach(x=>{if(x.cancelled)return;live++;const v=x.packs*x.price;tot+=v;x.pay==="credit"?cred+=v:cash+=v;prof+=x.packs*(x.price-x.cost)});
+  $("rsum").innerHTML=`<div class="s"><b>${money(tot)}</b><span>Sales (${live})</span></div><div class="s"><b>${money(prof)}</b><span>Profit</span></div><div class="s"><b>${money(cash)}</b><span>Cash</span></div><div class="s ${cred?"warn":""}"><b>${money(cred)}</b><span>Credit</span></div>`;
+  $("rlist").innerHTML=rows.length?rows.map(x=>`<div class="item ${x.cancelled?"exp":x.pay==="credit"?"soon":""}" data-sid="${x.id}"><div class="top"><div><div class="nm" ${x.cancelled?'style="text-decoration:line-through"':""}>${esc(x.common)}</div><div class="sb">Lot ${esc(x.lot)} · ${num(x.packs)} × ${num(x.ps)} ${esc(x.pu)}</div></div><span class="tag">${x.cancelled?"Cancelled":x.pay==="credit"?"Credit":"Cash"}</span></div><div class="g"><span>Amount <b>${money(x.packs*x.price)}</b></span><span>Price / pack <b>${money(x.price)}</b></span><span>Farmer <b>${esc(x.farmer||"–")}</b></span><span>Phone <b>${esc(x.phone||"–")}</b></span><span class="w">Time <b>${dt(x.at)}</b></span></div>${adm?`<div class="act">${x.cancelled?"":`<button data-a="cancel" type="button">${cArm===x.id?"Tap again to cancel":"Cancel sale"}</button>`}<button data-a="sdel" type="button">${dArm===x.id?"Tap again to delete":"Delete"}</button></div>`:""}</div>`).join(""):`<div class="empty">No sales match.</div>`;
 }
+$("pf").onclick=e=>{const b=e.target.closest("button");if(!b)return;pf=b.dataset.f;document.querySelectorAll("#pf button").forEach(x=>x.classList.toggle("on",x===b));renderSales()};
+["sfq","siq"].forEach(i=>$(i).addEventListener("input",renderSales));
+$("rlist").onclick=async e=>{const b=e.target.closest("button");if(!b)return;const id=b.closest(".item").dataset.sid,x=sales.find(v=>v.id===id);if(!x)return;
+  if(b.dataset.a==="cancel"){if(cArm!==id){cArm=id;dArm=null;renderSales();return}cArm=null;
+    try{const it=items.find(i=>i.id===x.stockId);if(it)await updateDoc(doc(db,"shops",me.shopId,"stock",x.stockId),{packs:Math.round((it.packs+x.packs)*1000)/1000});
+      await updateDoc(doc(db,"shops",me.shopId,"sales",id),{cancelled:true,cancelledAt:Date.now(),cancelledBy:me.username});addLog("cancelled sale of "+x.common+" (lot "+x.lot+")");flash("Sale cancelled")}catch(err){alert("Couldn’t cancel: "+err.message)}}
+  else if(b.dataset.a==="sdel"){if(dArm!==id){dArm=id;cArm=null;renderSales();return}dArm=null;
+    try{await deleteDoc(doc(db,"shops",me.shopId,"sales",id));addLog("deleted a sale record of "+x.common+" (lot "+x.lot+")")}catch(err){alert("Couldn’t delete: "+err.message)}}};
 $("pt").onclick=e=>{const b=e.target.closest("button");if(!b)return;rp=b.dataset.p;document.querySelectorAll("#pt button").forEach(x=>x.classList.toggle("on",x===b));$("cr").classList.toggle("hide",rp!=="custom");if(rp==="custom"&&!$("rf").value){$("rf").value=$("rt").value=dkey(new Date())}renderSales()};
 ["rf","rt"].forEach(i=>$(i).addEventListener("input",renderSales));
-$("rcopy").onclick=async()=>{const rows=repRows(),[a,b]=range();let tot=0,cash=0,cred=0,prof=0;
+$("rcopy").onclick=async()=>{const rows=repRows().filter(x=>!x.cancelled),[a,b]=range();let tot=0,cash=0,cred=0,prof=0;
   rows.forEach(x=>{const v=x.packs*x.price;tot+=v;x.pay==="credit"?cred+=v:cash+=v;prof+=x.packs*(x.price-x.cost)});
   const txt=`Sales report ${a} to ${b}\nTotal ${money(tot)} (Cash ${money(cash)}, Credit ${money(cred)})\nProfit ${money(prof)}\n\n`+rows.map(x=>`${dt(x.at)} · ${x.farmer||"-"} · ${x.common} lot ${x.lot} × ${num(x.packs)} · ${money(x.price)} · ${x.pay==="credit"?"Credit":"Cash"}`).join("\n");
   try{await navigator.clipboard.writeText(txt);$("rmsg").style.color="var(--green)";$("rmsg").textContent="Report copied."}catch(e){$("rmsg").style.color="var(--red)";$("rmsg").textContent="Couldn’t copy on this device."}};
@@ -364,10 +413,10 @@ $("ulist").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
 
 async function boot(u){
   unsubs.forEach(f=>f());unsubs=[];me=null;items=[];costs={};shops={};ostock={};subbed={};
-  if(!u){$("lf").reset();$("in").classList.add("hide");$("auth").classList.remove("hide");$("add").classList.add("hide");return}
+  if(!u){document.body.classList.add("out");$("lf").reset();$("in").classList.add("hide");$("auth").classList.remove("hide");$("add").classList.add("hide");return}
   let p=null;try{const s=await getDoc(doc(db,"users",u.uid));p=s.exists()?s.data():null}catch(e){}
   if(!p||!p.active){await signOut(auth);$("am").textContent="This login is disabled or not set up. Ask your shop admin.";return}
-  me={...p,uid:u.uid};$("auth").classList.add("hide");$("in").classList.remove("hide");
+  me={...p,uid:u.uid};document.body.classList.remove("out");$("auth").classList.add("hide");$("in").classList.remove("hide");
   $("who").textContent=`Logged in as ${p.username} (${p.role==="owner"?"app owner":p.role})`;
   unsubs.push(onSnapshot(collection(db,"names"),s=>{custom=s.docs.map(d=>({...d.data(),id:d.id}));renderNames()}));
   unsubs.push(onSnapshot(collection(db,"namehide"),s=>{hidden={};s.docs.forEach(d=>hidden[d.id]=1);renderNames()}));
@@ -378,7 +427,7 @@ async function boot(u){
   try{const s=await getDoc(doc(db,"shops",sid));if(s.exists())$("who").textContent+=" · "+s.data().name}catch(e){}
   unsubs.push(onSnapshot(collection(db,"shops",sid,"stock"),s=>{items=s.docs.map(d=>({...d.data(),id:d.id}));render()},e=>alert("Cloud error: "+e.message)));
   unsubs.push(onSnapshot(collection(db,"shops",sid,"private"),s=>{costs={};s.docs.forEach(d=>costs[d.id]=d.data().cost||0);render()}));
-  unsubs.push(onSnapshot(query(collection(db,"shops",sid,"sales"),orderBy("at","desc"),limit(1000)),s=>{sales=s.docs.map(d=>d.data());indexFarmers();renderSales()}));
+  unsubs.push(onSnapshot(query(collection(db,"shops",sid,"sales"),orderBy("at","desc"),limit(1000)),s=>{sales=s.docs.map(d=>({...d.data(),id:d.id}));indexFarmers();renderSales()}));
   showView("stock");
   if(adm){
     unsubs.push(onSnapshot(query(collection(db,"users"),where("shopId","==",sid)),s=>{users=s.docs.map(d=>({...d.data(),id:d.id}));renderUsers()}));
